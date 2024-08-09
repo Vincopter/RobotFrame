@@ -26,3 +26,9 @@ _ModuleInstall/
 
 # gitignore template for temporary of IPY
 .ipynb_checkpoints
+
+# project files
+CustomDockerfile
+sitl_stop.sh
+scripts/demonstation/shared/*
+scripts/demonstation/Keys/*
