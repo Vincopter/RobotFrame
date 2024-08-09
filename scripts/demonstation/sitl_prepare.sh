@@ -61,7 +61,8 @@ if [ ! $? -eq 0 ]; then
 fi
 
 cd ${CURRENT_DIR}/${DOCKER_VOLUME}
-git clone -q https://github.com/Vincopter/RobotFrame.git
+#git clone -q https://github.com/Vincopter/RobotFrame.git
+git clone -q git@github.com:Vincopter/RobotFrame.git
 
 echo "Demo preparation has been completed."
 
