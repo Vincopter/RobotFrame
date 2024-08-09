@@ -1,6 +1,5 @@
 #
-# [RobotFrame]
-# Script of prepare demonstration.
+# [RobotFrame] Script of prepare demonstration.
 #
 #!/bin/bash
 CURRENT_DIR=$('pwd')

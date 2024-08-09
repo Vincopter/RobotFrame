@@ -1,6 +1,5 @@
 #
-# [RobotFrame]
-# Start script of demonstration.
+# [RobotFrame] Start script of demonstration.
 #
 #!/bin/bash
 CURRENT_DIR=$('pwd')
@@ -8,7 +7,7 @@ DOCKER_VOLUME="shared"
 HOST_SHARED_PATH=${CURRENT_DIR}/${DOCKER_VOLUME}
 DEMO_DOCKER_IMAGE="robot_frame:demo"
 DEMO_PROJECT="RobotFrame"
-GEN_SCRIPTS_SIGN="# [RobotFrame] << Generated script >>"
+GEN_SCRIPTS_SIGN="#[{$DEMO_PROJECT}] << Generated script >>"
 
 # Configure SSH
 DOCKER_KEY_NAME="id_demo"
@@ -58,10 +57,10 @@ service ssh restart
 # building ROS projects
 mkdir -p ~/dev_ws/src
 cd ~/dev_ws
-cp -r /shared/RobotFrame src
+cp -r /shared/${DEMO_PROJECT} src
 colcon build --symlink-install
 source install/setup.bash
-ros2 launch RobotFrame launch_sim.launch.py
+ros2 launch robot_frame launch_sim.launch.py
 FEOF
 sudo chmod +x ${HOST_SHARED_PATH}/${DEMO_RUN_SHELL_FILE}
 
@@ -84,6 +83,7 @@ echo "Ip address of container is ${docker_cont_ip}"
 
 # ScripConnect to container and run conrtol
 cat > ${HOST_SHARED_PATH}/${RUN_CONTROL_SHELL_FILE} << FEOF
+${GEN_SCRIPTS_SIGN}
 #!/bin/bash
 source /opt/ros/humble/setup.bash
 source /root/dev_ws/install/setup.bash
@@ -96,11 +96,12 @@ sudo chmod +x ${HOST_SHARED_PATH}/${RUN_CONTROL_SHELL_FILE}
 # 2nd - title of x-window
 # 3rd - size of x-window in specified style in format: width x height (optional)
 start_script_as_X() {
- command=${1}
- tittle=${2}
- winsize=${3}
- if [ ! -z ${winsize} ]; then windows_style = '-fn "-misc-fixed-medium-r-normal--18-*-*-*-*-*-iso8859-15" -geometry ${winsize}'; fi
- xterm -xrm 'XTerm.vt100.allowTitleOps: false' ${windows_style} -T "${tittle}" -e "${command}" &
+	command=${1}
+	tittle=${2}
+	winsize=${3}
+	windows_style=''
+	if [ ! -z "$winsize" ]; then windows_style='-fn -misc-fixed-medium-r-normal--18-*-*-*-*-*-iso8859-15 -geometry ${winsize}'; fi
+	xterm -xrm 'XTerm.vt100.allowTitleOps: false' ${windows_style} -T "${tittle}" -e "${command}" &
 }
 
 # Starting console
