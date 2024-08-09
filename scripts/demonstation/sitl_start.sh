@@ -104,11 +104,11 @@ start_script_as_X() {
 }
 
 # Starting console
-start_script "ssh -i ${DOCKER_SSH_KEYS_DIR}/${DOCKER_KEY_NAME} root@$('hostname') -p 2200" "SSH CONSOLE" "150x40"
+start_script_as_X "ssh -i ${DOCKER_SSH_KEYS_DIR}/${DOCKER_KEY_NAME} root@$('hostname') -p 2200" "SSH CONSOLE" "150x40"
 sleep 3
 
 # Starting control on host
-start_script "docker exec -it ${docker_hash} /${DOCKER_VOLUME}/${RUN_CONTROL_SHELL_FILE}" "CONTROL"
+start_script_as_X "docker exec -it ${docker_hash} /${DOCKER_VOLUME}/${RUN_CONTROL_SHELL_FILE}" "CONTROL"
 sleep 3
 
 # Starting gazebo on host
