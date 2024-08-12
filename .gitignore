@@ -28,8 +28,9 @@ _ModuleInstall/
 .ipynb_checkpoints
 
 # project files
-build/*
 CustomDockerfile
+test.sh
 sitl_stop.sh
+build/*
 scripts/demonstation/shared/*
 scripts/demonstation/Keys/*
