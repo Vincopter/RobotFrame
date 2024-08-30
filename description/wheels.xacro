@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    
+    <xacro:include filename="geometry.xacro"/>
+    <!-- <xacro:include filename="materials.xacro"/> -->
+
+    <xacro:macro name="axle" params="position rotate">
+        <visual>
+            <origin xyz="${position}" rpy="${rotate}"/>
+            <geometry>
+                <cylinder length="${axle_length}" radius="${axle_radius}" />
+            </geometry>
+            <material name="WhiteOne"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <cylinder length="${axle_length}" radius="${axle_radius}" />
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="${axle_mass}" length="${axle_length}" radius="${axle_radius}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+    </xacro:macro>
+
+    <xacro:macro name="wheel" params="position rotate">
+        <visual>
+            <origin xyz="${position}" rpy="${rotate}"/>
+            <geometry>
+                <cylinder length="${wheel_length}" radius="${wheel_radius}" />
+            </geometry>
+            <material name="IndigoOne"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <cylinder length="${wheel_length}" radius="${wheel_radius}" />
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="${wheel_mass}" length="${wheel_length}" radius="${wheel_radius}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+    </xacro:macro>
+
+    <!-- FRONT AXLE -->
+    <link name="front_axle">
+        <xacro:axle 
+            position="0 0 0"
+            rotate="0 0 0"
+        />
+    </link>
+
+    <!-- BACK AXLE -->
+    <link name="back_axle">
+        <xacro:axle 
+            position="0 0 0"
+            rotate="0 0 0"
+        />
+    </link>
+
+    <!-- LEFT FRONT WHEEL -->
+    <link name="front_left_wheel">
+        <xacro:wheel 
+            position="0 0 0"
+            rotate="${pi} 0 0"
+        />
+    </link>
+
+    <!-- RIGHT FRONT WHEEL -->
+    <link name="front_right_wheel">
+        <xacro:wheel 
+            position="0 0 0"
+            rotate="-${pi} 0 0"
+        />
+    </link>
+
+    <!-- LEFT BACK WHEEL -->
+    <link name="back_left_wheel">
+        <xacro:wheel 
+            position="0 0 0" 
+            rotate="${pi} 0 0"/>
+    </link>
+
+    <!-- RIGHT BACK WHEEL -->
+    <link name="back_right_wheel">
+        <xacro:wheel 
+            position="0 0 0" 
+            rotate="-${pi} 0 0"
+        />
+    </link>
+</robot>

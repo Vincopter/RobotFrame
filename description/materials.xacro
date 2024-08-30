@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<material name="BlueOne">
+		<color rgba="0.0 0.0 1.0 1.0"/>
+	</material>
+
+	<material name="RedOne">
+		<color rgba="1.0 0.0 0.0 1.0"/>
+	</material>
+
+	<material name="WhiteOne">
+		<color rgba="1.0 1.0 1.0 1.0"/>
+	</material>
+
+	<material name="YellowOne">
+		<color rgba="0.651 0.67 0.114 1.0"/>
+	</material>
+
+	<material name="BlackOne">
+		<color rgba="0 0 0 1.0"/>
+	</material>
+
+	<material name="OrangeOne">
+		<color rgba="0.96 0.613 0.365 1.0"/>
+	</material>
+	
+	<material name="PurpleOne">
+		<color rgba="0.633 0.114 0.67 1.0"/>
+	</material>
+	
+	<material name="TurquoiseOne">
+		<color rgba="0.114 0.67 0.642 1.0"/>
+	</material>
+
+	<material name="GreenOne">
+		<color rgba="0.653 0.96 0.684 1.0"/>
+	</material>
+
+	<material name="IndigoOne">
+		<color rgba="0.468 0.408 0.77 1.0"/>
+	</material>
+
+	<material name="GreyOne">
+		<color rgba="0.75 0.7 0.8 1.0"/>
+	</material>
+
+	<material name="GreyTransparentOne">
+		<color rgba="0.754 0.79 0.82 1.0"/>
+	</material>
+
+</robot>

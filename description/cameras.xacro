@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="camera_box" params="side mass surface rotate enable:='true'">
+
+        <link name="${side}_camera_box">
+            <visual>
+                <origin rpy="${rotate}"/>
+                <geometry>
+                    <box size="${surface} ${surface} ${surface}"/>
+                </geometry>
+                <material name="GreyOne"/>
+            </visual>
+            <visual>
+                <origin xyz="${surface/4} 0 ${surface/2}" />
+                <geometry>
+                    <sphere radius="${surface/4}"/>
+                </geometry>
+            </visual>
+            <collision>
+                <geometry>
+                    <box size="${surface} ${surface} ${surface}"/>
+                </geometry>
+            </collision>
+            <xacro:inertial_box 
+                mass="${mass}" 
+                x="${surface}"
+                y="${surface}"
+                z="${surface}">
+                <origin/>
+            </xacro:inertial_box>
+        </link>
+
+        <link name="${side}_camera_optical"></link>
+
+        <gazebo reference="${side}_camera_box">
+            <sensor name="camera_${side}" type="camera">
+                <pose> 0 0 0 0 0 0 </pose>
+                <visualize>true</visualize>
+                <!--
+                    Такая малая частота обновления для того, 
+                    чтобы совмещать с реальной камерой, 
+                    изображение с которой не надо замещать данными с gazebo 
+                -->
+                <update_rate>0.5</update_rate>
+                <camera>
+                    <horizontal_fov>1.2</horizontal_fov>
+                    <image>
+                        <format>R8G8B8</format>
+                        <width>640</width>
+                        <height>480</height>
+                    </image>
+                    <clip>
+                        <near>0.05</near>
+                        <far>8.0</far>
+                    </clip>
+                </camera>
+                <plugin name="camera_controller_${side}" filename="libgazebo_ros_camera.so">
+                    <ros>
+                        <namespace>cameras</namespace>
+                    </ros>
+                    <frame_name>${side}_camera_optical</frame_name>
+                </plugin>
+            </sensor>
+        </gazebo>
+    </xacro:macro>
+
+    <!-- FRONT CAMERA -->
+    <xacro:camera_box
+        side="front"
+        mass="${camera_mass}"
+        surface="${camera_box_panel}"
+        rotate="0 ${pi/4} 0"
+    />
+    
+    <joint name="front_camera_box_joint" type="fixed">
+        <parent link="box_panel_top"/>
+        <child link="front_camera_box"/>
+        <origin xyz="${box_panel_top_depth - camera_box_panel/2} 0 ${box_panel_top_height/2}" />
+    </joint>
+
+    <joint name="front_camera_optical_joint" type="fixed">
+        <parent link="front_camera_box"/>
+        <child link="front_camera_optical"/>
+        <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+    </joint>
+ 
+    <!-- BACK CAMERA -->
+    <xacro:camera_box
+        side="back"
+        mass="${camera_mass}"
+        surface="${camera_box_panel}"
+        rotate="0 ${pi/4} 0"
+    />
+    
+    <joint name="back_camera_box_joint" type="fixed">
+        <parent link="box_panel_back"/>
+        <child link="back_camera_box"/>
+        <origin xyz="-${box_panel_fb_depth/2} 0 ${box_panel_fb_height - (box_panel_fb_height * 1/7)}" rpy="0 0 ${pi}"/>
+    </joint>
+
+    <joint name="back_camera_optical_joint" type="fixed">
+        <parent link="back_camera_box"/>
+        <child link="back_camera_optical"/>
+        <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+    </joint>
+
+
+</robot>

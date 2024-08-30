@@ -30,6 +30,7 @@ netcat \
 gazebo \
 libqt5gui5 \
 libgazebo11 \
+libopencv-dev \
 net-tools \
 iproute2 \
 iputils-ping \
@@ -38,7 +39,10 @@ python3-argcomplete \
 ros-dev-tools \
 ros-humble-gazebo-ros-pkgs \
 ros-humble-joint-state-publisher-gui \
-ros-humble-rmw-cyclonedds-cpp
+ros-humble-rmw-cyclonedds-cpp \
+ros-humble-twist-mux \
+ros-humble-controller-manager \
+ros-humble-usb-cam
 
 RUN apt-get install -y openssh-server
 RUN mkdir -p /var/run/sshd

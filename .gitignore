@@ -32,5 +32,6 @@ CustomDockerfile
 test.sh
 sitl_stop.sh
 build/*
+.vscode/*
 scripts/demonstation/shared/*
 scripts/demonstation/Keys/*

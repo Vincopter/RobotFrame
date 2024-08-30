@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="geometry.xacro"/>
+    <xacro:include filename="inertial.xacro"/>
+
+    <!-- MACROS -->
+    <xacro:macro name="plate_panel" params="position rotate *material">
+        <visual>
+            <origin xyz="${position}" rpy="${rotate}"/>
+            <geometry>
+                <box size="${ladle_plate_width} ${ladle_plate_depth} ${ladle_plate_height}"/>
+            </geometry>
+             <xacro:insert_block name="material" />
+        </visual>
+        <collision>
+            <origin xyz="${position}" rpy="${rotate}"/>
+            <geometry>
+                <box size="${ladle_plate_width} ${ladle_plate_depth} ${ladle_plate_height}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_box 
+            mass="${ladle_plate_mass}" 
+            x="${ladle_plate_width}" 
+            y="${ladle_plate_depth}"
+            z="${ladle_plate_height}">
+            <origin xyz="${position}" rpy="${rotate}"/>
+        </xacro:inertial_box>
+    </xacro:macro>
+    <xacro:macro name="bracket_vertical" params="rotate">
+        <visual>
+            <origin rpy="${rotate}"/>
+            <geometry>
+                <box size="${ladle_bracket_vertical_width} ${ladle_bracket_vertical_depth} ${ladle_bracket_vertical_height}"/>
+            </geometry>
+                <material name="BlueOne"/>
+        </visual>
+        <collision>
+            <origin rpy="${rotate}"/>
+            <geometry>
+                <box size="${ladle_bracket_vertical_width} ${ladle_bracket_vertical_depth} ${ladle_bracket_vertical_height}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_box 
+            mass="${ladle_bracket_vertical_mass}" 
+            x="${ladle_bracket_vertical_width}" 
+            y="${ladle_bracket_vertical_depth}"
+            z="${ladle_bracket_vertical_height}">
+            <origin rpy="${rotate}"/>
+        </xacro:inertial_box>
+    </xacro:macro>
+
+    <!-- LADLE BRACKET HORIZONTAL LINK -->
+    <link name="ladle_bracket_horizontal">
+        <visual>
+            <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+            <geometry>
+                <cylinder radius="${ladle_bracket_radius}" length="${ladle_bracket_length}"/>
+            </geometry>
+            <material name="WhiteOne"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+            <geometry>
+                <cylinder radius="${ladle_bracket_radius}" length="${ladle_bracket_length}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="${ladle_bracket_mass}" length="${ladle_bracket_length}" radius="${ladle_bracket_radius}">
+            <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+        </xacro:inertial_cylinder>
+    </link>
+
+    <!-- BRACKET VERTICAL LEFT LINK -->
+    <link name="ladle_bracket_vertical_left">
+        <xacro:bracket_vertical rotate="0 0 ${pi/2}"></xacro:bracket_vertical>
+    </link> 
+
+    <!-- BRACKET VERTICAL RIGHT LINK -->
+    <link name="ladle_bracket_vertical_right">
+        <xacro:bracket_vertical rotate="0 0 ${pi/2}"></xacro:bracket_vertical>
+    </link> 
+
+    <!-- LADLE STEEVE LINK -->
+    <link name="ladle_steeve">
+        <visual>
+            <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+            <geometry>
+                <cylinder radius="${ladle_sleeve_radius}" length="${ladle_sleeve_length}"/>
+            </geometry>
+            <material name="WhiteOne"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+            <geometry>
+                <cylinder radius="${ladle_sleeve_radius}" length="${ladle_sleeve_length}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="${ladle_sleeve_mass}" length="${ladle_sleeve_length}" radius="${ladle_sleeve_radius}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+    </link>
+
+    <!-- LADLE PLATE TOP LINK-->
+    <link name="ladle_plate_top">
+        <xacro:plate_panel position="0 0 0" rotate="${pi/4} 0 ${pi/2}">
+            <material name="GreenOne"/>
+        </xacro:plate_panel>
+    </link>
+
+    <!-- LADLE PLATE BOTTOM LINK-->
+    <link name="ladle_plate_bottom">
+        <xacro:plate_panel position="0 0 0" rotate="-${pi/4} 0 ${pi/2}">
+            <material name="PurpleOne"/>
+        </xacro:plate_panel>
+    </link>
+
+</robot>
