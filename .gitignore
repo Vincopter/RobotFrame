@@ -23,6 +23,7 @@ _Boot/
 _CompileInfo/
 _Libraries/
 _ModuleInstall/
+__pycache__/
 
 # gitignore template for temporary of IPY
 .ipynb_checkpoints
