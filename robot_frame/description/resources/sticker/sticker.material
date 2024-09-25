@@ -1,0 +1,18 @@
+material vc_robot/sticker
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+      specular 0.03 0.03 0.03 1.000000 
+
+      texture_unit
+      {
+        texture sticker.png
+        scale 1 1
+      }
+    }
+  }
+}

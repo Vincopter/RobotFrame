@@ -1,0 +1,24 @@
+# [GENERATED YAML-FILE]
+/**:
+  ros__parameters:
+    auto_white_balance: !!bool false
+    autoexposure: !!bool true
+    autofocus: !!bool false
+    av_device_format: "YUV422P"
+    brightness: !!int -1
+    camera_info_url: "/home/osin/dev_ws/src/RobotFrame/configs/sunplus_camera_info.yaml"
+    camera_name: "optical_camera_front"
+    contrast: !!int -1
+    exposure: !!int 100
+    focus: !!int -1
+    frame_id: "front_camera_optical"
+    framerate: !!float 30.0
+    gain: !!int -1
+    image_height: !!int 480
+    image_width: !!int 640
+    io_method: "mmap"
+    pixel_format: "mjpeg2rgb"
+    saturation: !!int -1
+    sharpness: !!int -1
+    video_device: "/dev/video0"
+    white_balance: !!int 4000

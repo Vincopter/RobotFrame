@@ -1,0 +1,218 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<!-- DAE image of finger manipulator -->
+    <xacro:macro name="finger" params="type:=''">
+        <mesh filename="file://$(arg resDir)/gripper/l_finger_${type}.dae" scale="0.5 0.5 0.5"/>
+    </xacro:macro>
+
+    <!-- DEFINITION MACROS -->
+    <!-- Definition articulation link -->
+    <xacro:macro name="articulation_link" params="name mass radius length position:='0 0 0' rotation:='0 0 0'">
+        <link name="${name}">
+            <visual>
+                <origin xyz="${position}" rpy="${rotation}"/>
+                <geometry>
+                    <cylinder length="${length}" radius="${radius}" />
+                </geometry>
+                <material name="PurpleOne"/>
+            </visual>
+            <collision>
+                <origin xyz="${position}" rpy="${rotation}"/>
+                <geometry>
+                    <cylinder length="${length}" radius="${radius}" />
+                </geometry>
+            </collision>
+            <xacro:inertial_cylinder  
+                mass="${mass}" 
+                length="${length}"
+                radius="${radius}">
+                <origin xyz="${position}" rpy="${rotation}"/>
+            </xacro:inertial_cylinder>
+        </link>
+        <xacro:gazeboBlueColorBlock link="${name}"/>
+    </xacro:macro>
+    
+    <!-- Definition end-effector link -->
+    <xacro:macro name="articulation_end_effector_link" params="name mass radius position:='0 0 0' rotation:='0 0 0'">
+        <link name="${name}">
+            <visual>
+                <origin xyz="${position}" rpy="${rotation}"/>
+                <geometry>
+                    <sphere radius="${radius}"/>
+                </geometry>
+                <material name="WhiteOne"/>
+            </visual>
+            <collision>
+                <origin xyz="${position}" rpy="${rotation}"/>
+                <geometry>
+                    <sphere radius="${radius}"/>
+                </geometry>
+            </collision>
+            <xacro:inertial_sphere  
+                mass="${mass}" 
+                radius="${radius}">
+                <origin xyz="0 0 0"/>
+            </xacro:inertial_sphere>
+        </link>
+        <xacro:gazeboBlueColorBlock link="${name}"/>
+    </xacro:macro>
+
+    <!-- Definition manipulators link -->
+    <xacro:macro name="manipulator_link" params="name length position rotate">
+        <link name="${name}">
+            <visual>
+                <origin xyz="${position}" rpy="${rotate}"/>
+                <geometry>
+                    <cylinder length="${length}" radius="${manipulator_radius}" />
+                </geometry>
+                <material name="BlueOne"/>
+            </visual>
+            <collision>
+                <origin xyz="${position}" rpy="${rotate}"/>
+                <geometry>
+                    <cylinder length="${length}" radius="${manipulator_radius}" />
+                </geometry>
+            </collision>
+            <!-- Calculate actual manipulator's mass (in Kg)-->
+            <xacro:property 
+                name="manipulator_mass" 
+                value="${(pi * ((manipulator_radius*2)**2)/4)*length * manipulator_mass_density}" 
+            /> 
+            <DEBUG length_="${length}" mass_="${round(manipulator_mass, 5)}"/>
+            <inertial>
+                <origin />
+                <mass value="${manipulator_mass}" />
+                <inertia ixx="0.002" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0" />
+            </inertial>
+        </link>
+        <xacro:gazeboGreyColorBlock link="${name}"/>
+    </xacro:macro>
+
+    <!-- Definition grippers link -->
+    <xacro:macro name="gripper_part_link" params="name_prefix reflect">
+        <link name="${name_prefix}_gripper">
+            <visual>
+                <origin rpy="${(reflect-1)/2*pi} 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <xacro:finger />
+                </geometry>
+            </visual>
+            <collision>
+                <geometry>
+                    <xacro:finger />
+                </geometry>
+                <origin rpy="${(reflect-1)/2*pi} 0 0" xyz="0 0 0"/>
+            </collision>
+            <xacro:inertial_default mass="${gripper_mass}"/>
+        </link>
+
+        <link name="${name_prefix}_gripper_tip">
+            <visual>
+                <origin rpy="${(reflect-1)/2*pi} 0 0" xyz="0.046 0.0039 0"/>
+                <geometry>
+                    <xacro:finger type="tip"/>
+                </geometry>
+            </visual>
+            <collision>
+                <geometry>
+                    <xacro:finger type="tip"/>
+                </geometry>
+                <origin rpy="${(reflect-1)/2*pi} 0 0" xyz="0.046 0.0039 0"/>
+            </collision>
+            <xacro:inertial_default mass="${gripper_tip_mass}"/>
+        </link>
+    </xacro:macro>
+
+    <xacro:macro name="gripper_link" params="side turn_in_percent">
+
+        <xacro:property name="reflect_" value="1"/>
+        <xacro:property name="value" value="${(turn_in_percent * gripper_reflect_base) / 100}" />
+        <xacro:if value="${side == 'left'}">
+            <xacro:property name="reflect_" value="-1"/>
+        </xacro:if>
+        <xacro:gripper_part_link 
+            name_prefix="${side}_up" 
+            reflect="${gripper_reflect_base + reflect_ * value}" />
+        <xacro:gripper_part_link 
+            name_prefix="${side}_down" 
+            reflect="${-gripper_reflect_base + reflect_ * value}" />
+    </xacro:macro>
+
+    <!--Definition of DoF manipulator by side-->
+    <xacro:macro name="DoF_manipulator" params="side">
+        <xacro:property name="factor_by_side" value="1"/>
+        <xacro:if value="${side == 'left'}">
+            <xacro:property name="factor_by_side" value="-1"/>
+        </xacro:if>
+
+        <!--BASE ARTICULATION-->
+        <xacro:articulation_link
+            name="articulation_base_${side}"
+            mass="${base_articulation_mass}" 
+            radius="${base_articulation_radius}" 
+            length="${base_articulation_length}" 
+            position ="0 0 0" 
+            rotation="${pi/2} 0 0"
+        />
+
+        <!-- BASE (FIRST) MANIPULATOR -->
+        <xacro:manipulator_link 
+            name="manipulator_1st_${side}"
+            position="0 0 0"
+            rotate="${factor_by_side * -(pi/2)} 0 0"
+            length="${manipulator_1st_length}"
+        />
+
+        <!-- FIRST ARTICULATION -->
+        <xacro:articulation_link
+            name="articulation_1st_${side}"
+            mass="${articulation_mass}" 
+            radius="${articulation_radius}" 
+            length="${articulation_length}" 
+        />
+
+        <!-- SECOND MANIPULATOR -->
+        <xacro:manipulator_link
+            name="manipulator_2nd_${side}"
+            position="0 0 0"
+            rotate="0 ${pi/2} 0"
+            length="${manipulator_2nd_length}"
+        />
+                        
+        <!-- SECOND ARTICULATION -->
+        <xacro:articulation_link
+            name="articulation_2nd_${side}"
+            mass="${articulation_mass}" 
+            radius="${articulation_radius}" 
+            length="${articulation_length}" 
+        />
+
+        <!-- THIRD MANIPULATOR -->
+        <xacro:manipulator_link
+            name="manipulator_3rd_${side}"
+            position="0 0 0"
+            rotate="0 ${pi/2} 0"
+            length="${manipulator_3rd_length}"
+        />
+
+        <!-- THIRD ARTICULATION FOR END EFFECTOR  -->
+        <xacro:articulation_end_effector_link
+            name="articulation_end_effector_${side}"
+            mass="${articulation_end_effector_mass}" 
+            radius="${articulation_end_effector_radius}" 
+        />
+
+        <!-- GRIPPER MANIPULATOR -->
+        <xacro:gripper_link side="${side}" turn_in_percent="10"/>
+
+    </xacro:macro>
+
+    <!--IMPLEMENTATION-->
+    <!-- LEFT MANIPULATOR -->
+    <xacro:DoF_manipulator side="left" />
+
+    <!-- RIGHT MANIPULATOR -->
+    <xacro:DoF_manipulator side="right" />
+
+</robot>

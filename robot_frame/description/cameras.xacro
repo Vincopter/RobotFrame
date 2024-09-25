@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="camera_box" params="prefix mass surface rotate">
+
+        <link name="${prefix}_camera_box">
+            <visual>
+                <origin rpy="${rotate}"/>
+                <geometry>
+                    <box size="${surface} ${surface} ${surface}"/>
+                </geometry>
+                <material name="GreyOne"/>
+            </visual>
+            <collision>
+                <geometry>
+                    <box size="${surface} ${surface} ${surface}"/>
+                </geometry>
+            </collision>
+            <xacro:inertial_box 
+                mass="${mass}" 
+                x="${surface}"
+                y="${surface}"
+                z="${surface}">
+                <origin/>
+            </xacro:inertial_box>
+        </link>
+
+        <link name="${prefix}_camera_led">
+            <visual>
+                <origin xyz="${surface/4} 0 ${surface/2}" />
+                <geometry>
+                    <sphere radius="${surface/4}"/>
+                </geometry>
+                <material name="RedOne"/>
+            </visual> 
+        </link>
+        <joint name="${prefix}_camera_led_joint" type="fixed">
+            <parent link="${prefix}_camera_box"/>
+            <child link="${prefix}_camera_led"/>
+        </joint>
+        <xacro:gazeboLedLightBlock link="${prefix}_camera_led"/>
+    </xacro:macro>
+
+    <xacro:macro name="optical_camera" params="side rotate enable:='true'">
+
+        <xacro:camera_box
+            prefix="${side}_optical"
+            mass="${camera_mass}"
+            surface="${camera_box_panel}"
+            rotate="${rotate}"
+        />
+
+        <link name="${side}_camera_optical"></link>
+
+        <gazebo reference="${side}_optical_camera_box">
+
+            <sensor name="optical_camera_${side}" type="camera">
+                <pose> 0 0 0 0 0 0 </pose>
+                <visualize>true</visualize>
+                <!--
+                    Такая малая частота обновления для того, 
+                    чтобы совмещать с реальной камерой, 
+                    изображение с которой не надо замещать данными с gazebo 
+                -->
+                <update_rate>0.5</update_rate>
+                <camera>
+                    <horizontal_fov>1.2</horizontal_fov>
+                    <image>
+                        <format>R8G8B8</format>
+                        <width>640</width>
+                        <height>480</height>
+                    </image>
+                    <clip>
+                        <near>0.1</near>
+                        <far>8.5</far>
+                    </clip>
+                </camera>
+                <plugin name="optical_camera_controller_${side}" filename="libgazebo_ros_camera.so">
+                    <ros>
+                        <namespace>cameras</namespace>
+                    </ros>
+                    <frame_name>${side}_camera_optical</frame_name>
+                </plugin>
+            </sensor>
+        </gazebo>
+    </xacro:macro>
+
+    <xacro:macro name="depth_camera" params="side rotate">
+
+        <xacro:camera_box
+            prefix="${side}_depth"
+            mass="${camera_mass}"
+            surface="${camera_box_panel}"
+            rotate="${rotate}"
+        />
+
+        <link name="${side}_camera_depth"></link>
+
+        <gazebo reference="${side}_depth_camera_box">
+
+            <sensor name="depth_camera_${side}" type="depth">
+                <pose> 0 0 0 0 0 0 </pose>
+                <visualize>true</visualize>
+                <update_rate>20</update_rate>
+                <camera>
+                    <horizontal_fov>1.8</horizontal_fov>
+                    <image>
+                        <format>B8G8R8</format>
+                        <width>640</width>
+                        <height>480</height>
+                    </image>
+                    <clip>
+                        <near>0.1</near>
+                        <far>8.0</far>
+                    </clip>
+                </camera>
+                <plugin name="depth_camera_controller_${side}" filename="libgazebo_ros_camera.so">
+                    <ros>
+                        <namespace>cameras</namespace>
+                    </ros>
+                    <frame_name>${side}_camera_depth</frame_name>
+                    <hack_baseline>1</hack_baseline>
+                    <min_depth>2</min_depth>
+                    <max_depth>90</max_depth>
+                </plugin>
+            </sensor>
+        </gazebo>
+    </xacro:macro>
+
+    <!-- FRONT CAMERA -->
+    <xacro:optical_camera
+        side="front"
+        rotate="0 ${pi/4} 0"
+        enable="true"
+    />
+    
+    <joint name="front_optical_camera_box_joint" type="fixed">
+        <parent link="box_panel_top"/>
+        <child link="front_optical_camera_box"/>
+        <origin xyz="${box_panel_top_depth - camera_box_panel/2} ${box_panel_top_width/3} ${box_panel_top_height}" />
+    </joint>
+
+    <joint name="front_camera_optical_joint" type="fixed">
+        <parent link="front_optical_camera_box"/>
+        <child link="front_camera_optical"/>
+        <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+    </joint>
+ 
+    <!-- BACK CAMERA -->
+    <xacro:optical_camera
+        side="back"
+        rotate="0 ${pi/4} 0"
+        enable="true"
+    />
+    
+    <joint name="back_camera_box_joint" type="fixed">
+        <parent link="box_panel_back"/>
+        <child link="back_optical_camera_box"/>
+        <origin xyz="-${box_panel_fb_depth/2} 0 ${box_panel_fb_height - (box_panel_fb_height * 1/7)}" rpy="0 0 ${pi}"/>
+    </joint>
+
+    <joint name="back_camera_optical_joint" type="fixed">
+        <parent link="back_optical_camera_box"/>
+        <child link="back_camera_optical"/>
+        <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+    </joint>
+
+    <!-- FRONT DEPTH CAMERA -->
+    <xacro:depth_camera
+        side="front"
+        rotate="0 ${pi/4} 0"
+    />
+
+    <joint name="front_depth_camera_box_joint" type="fixed">
+        <parent link="box_panel_top"/>
+        <child link="front_depth_camera_box"/>
+        <origin xyz="${box_panel_top_depth - camera_box_panel/2} -${box_panel_top_width/3} ${box_panel_top_height}" />
+    </joint>
+
+    <joint name="front_camera_depth_joint" type="fixed">
+        <parent link="front_depth_camera_box"/>
+        <child link="front_camera_depth"/>
+        <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+    </joint>
+ 
+</robot>

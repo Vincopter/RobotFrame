@@ -1,0 +1,7 @@
+# [GENERATED YAML-FILE]
+joy_node:
+  ros__parameters:
+    device_id: !!int 0
+    device_name: "OpenTX Radiomaster TX12 Joystick"
+    deadzone: !!float 0.05
+    autorepeat_rate: !!float 0.5

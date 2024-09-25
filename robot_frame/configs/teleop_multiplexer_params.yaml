@@ -1,0 +1,16 @@
+# [GENERATED YAML-FILE]
+twist_mux:
+  ros__parameters:
+    topics:
+      navigation:
+        topic: cmd_vel_navigation
+        timeout: !!float 0.5
+        priority: !!int 10
+      keyboard:
+        topic: cmd_vel_keyboard
+        timeout: !!float 0.5
+        priority: !!int 40
+      joystick:
+        topic: cmd_vel_joystick
+        timeout: !!float 0.5
+        priority: !!int 50

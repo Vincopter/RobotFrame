@@ -1,0 +1,18 @@
+# [GENERATED YAML-FILE]
+teleop_node_joystick:
+  ros__parameters:
+    require_enable_button: !!bool false
+    enable_button: !!int 0
+    enable_turbo_button: !!int 1
+    axis_linear:
+      x: !!int 1
+    scale_linear:
+      x: !!float 0.7
+    scale_linear_turbo:
+      x: !!float 3.0
+    axis_angular:
+      yaw: !!int 5
+    scale_angular:
+      yaw: !!float 0.5
+    scale_angular_turbo:
+      yaw: !!float 3.0

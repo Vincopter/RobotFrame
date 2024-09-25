@@ -1,0 +1,263 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot_frame">
+    
+    <xacro:include filename="geometry.xacro"/>
+    <xacro:include filename="materials.xacro"/>
+    <xacro:include filename="inertial.xacro"/>
+    <xacro:include filename="wheels.xacro"/>
+    <xacro:include filename="box.xacro"/>
+    <xacro:include filename="lidars.xacro"/>
+    <xacro:include filename="cameras.xacro"/>
+    
+    <!-- ROS2 CONTROLS -->
+    <xacro:if value="$(arg use_ros2_control)">
+        <xacro:include filename="ros2_controller.xacro" />
+    </xacro:if>
+    <xacro:unless value="$(arg use_ros2_control)">
+        <xacro:include filename="gazebo_controller.xacro" />
+    </xacro:unless>
+
+    <!-- MANIPULATORS, GRIPPERS AND JOINTS -->
+    <xacro:include filename="manipulators.xacro"/>
+    <xacro:include filename="manipulator_joints.xacro"/>
+
+    <!-- LADLE AND JOINTS -->
+    <!-- [DEBUG] -->
+    <!-- 
+    <xacro:include filename="ladle.xacro"/>
+    <xacro:include filename="ladle_joints.xacro"/> 
+    -->
+
+    <!-- BASIS LINK -->
+    <link name="base_link"/>
+
+    <!-- CHASSIS LINK -->
+    <link name="chassis">
+        <visual>
+            <origin xyz="${chassis_depth/2.0} 0 ${chassis_height/2}"/>
+            <geometry>
+                <box size="${box_depth} ${box_width} ${chassis_height}"/>
+            </geometry>
+            <material name="YellowOne"/>
+            <meta> <layer> 1 </layer></meta>
+        </visual>
+        <collision>
+            <origin xyz="${chassis_depth/2.0} 0 ${chassis_height/2}"/>
+            <geometry>
+                <box size="${box_depth} ${box_width} ${chassis_height}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_box mass="${chassis_mass}" x="${chassis_depth}" y="${chassis_width}" z="${chassis_height}">
+            <origin xyz="${chassis_depth/2.0} 0 ${chassis_height/2}"/>
+        </xacro:inertial_box>
+    </link>
+    <gazebo reference="chassis">
+    	<material>Gazebo/Blue</material>
+	</gazebo>
+
+    <!-- JOINT: CHASSIS + BASIS -->
+    <joint name="chassis_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="chassis"/>
+        <origin xyz="-${chassis_depth/2.0} 0 ${chassis_height/2}"/>
+    </joint>
+
+    <!-- JOINT: CHASSIS + FRONT AXLE -->
+    <joint name="front_axle_chassis_joint" type="fixed">
+        <parent link="chassis"/>
+        <child link="front_axle"/>
+        <origin xyz="${chassis_depth - round(chassis_depth * 1/8, 3)} 0 0" rpy="${pi/2} 0 0"/>
+    </joint>
+
+    <!-- JOINT: CHASSIS + BACK AXLE -->
+    <joint name="back_axle_chassis_joint" type="fixed">
+        <parent link="chassis"/>
+        <child link="back_axle"/>
+        <origin xyz="${round(chassis_depth * 1/8, 3)} 0 0" rpy="${pi/2} 0 0"/>
+    </joint>
+
+    <!-- HOOD -->
+    <!-- JOINT: HOOD FRONT + CHASSIS -->
+    <joint name="hfront_chassis_joint" type="fixed">
+        <parent link="chassis"/>
+        <child link="hood_front"/>
+        <origin xyz="${chassis_depth} 0 ${chassis_height}"/>
+    </joint>
+
+    <!-- JOINT: HOOD LEFT + CHASSIS -->
+    <joint name="hleft_chassis_joint" type="fixed">
+        <parent link="chassis"/>
+        <child link="hood_left"/>
+        <origin xyz="${chassis_box_depth + chassis_hood_depth/2} ${chassis_width/2} ${chassis_height}"/>
+    </joint>
+    
+    <!-- JOINT: HOOD RIGHT + CHASSIS -->
+    <joint name="hright_chassis_joint" type="fixed">
+        <parent link="chassis"/>
+        <child link="hood_right"/>
+        <origin xyz="${chassis_box_depth + chassis_hood_depth/2} -${chassis_width/2} ${chassis_height}"/>
+    </joint>
+
+    <!-- JOINT: HOOD TOP + HOOD FRONT -->
+    <joint name="htop_hfront_joint" type="fixed">
+        <parent link="hood_front"/>
+        <child link="hood_top"/>
+        <origin xyz="-${hood_top_depth} 0 ${hood_fb_height}"/>
+    </joint>
+
+    <!-- JOINT: HOOD BAFFEL + HOOD TOP -->
+    <joint name="hbaffle_htop_joint" type="fixed">
+        <parent link="hood_top"/>
+        <child link="hood_baffle"/>
+        <origin xyz="-${hood_top_depth/2} 0 ${chassis_height}"/>
+    </joint>
+
+    <!-- LADLE -->
+    <!-- JOINT: BOX LADLE + HOOD FRONT -->
+    <joint name="bladle_hfront_joint" type="fixed">
+        <parent link="hood_front"/>
+        <child link="box_ladle_front"/>
+        <origin xyz="0 0 ${hood_fb_height/5}"/>
+    </joint>
+
+    <!-- JOINT: LADLE BRACKET HOLDER LEFT + BOX LADLE -->
+    <joint name="lbracket_holder_bladle_joint" type="fixed">
+        <parent link="box_ladle_front"/>
+        <child link="box_bracket_holder_left"/>
+        <origin xyz="${box_bracket_ladle_depth + box_bracket_ladle_depth/2} ${box_bracket_ladle_width/2 - box_bracket_holder_width/2} 0"/>
+    </joint>
+
+    <!-- JOINT: LADLE BRACKET HOLDER RIGHT + BOX LADLE -->
+    <joint name="rbracket_holder_bladle_joint" type="fixed">
+        <parent link="box_ladle_front"/>
+        <child link="box_bracket_holder_right"/>
+        <origin xyz="${box_bracket_ladle_depth+ box_bracket_ladle_depth/2} -${box_bracket_ladle_width/2 - box_bracket_holder_width/2} 0"/>
+    </joint>
+
+    <!-- LADLE (INCLUDES)--> 
+
+    <!-- BOX PANELS -->
+    <!-- JOINT: PANEL BACK + CHASSIS -->
+    <joint name="pback_chassis_joint" type="fixed">
+        <parent link="chassis"/>
+        <child link="box_panel_back"/>
+        <origin xyz="${box_panel_fb_depth/2} 0 ${chassis_height}"/>
+    </joint>
+
+    <!-- JOINT: PANEL FRONT + CHASSIS -->
+    <joint name="pfront_chassis_joint" type="fixed">
+        <parent link="chassis"/>
+        <child link="box_panel_front"/>
+        <origin xyz="${chassis_box_depth} 0 ${chassis_height}"/>
+    </joint>
+
+    <!-- JOINT: PANEL LEFT + CHASSIS -->
+    <joint name="pleft_chassis_joint" type="fixed">
+        <parent link="chassis"/>
+        <child link="box_panel_left"/>
+        <origin xyz="${chassis_box_depth/2} ${chassis_width/2} ${chassis_height}"/>
+    </joint>
+
+    <!-- JOINT: PANEL RIGHT + CHASSIS -->
+    <joint name="pright_chassis_joint" type="fixed">
+        <parent link="chassis"/>
+        <child link="box_panel_right"/>
+        <origin xyz="${chassis_box_depth/2} -${chassis_width/2} ${chassis_height}"/>
+    </joint>
+
+    <!-- JOINT: PANEL TOP + PANEL FRONT -->
+    <joint name="ptop_pfront_joint" type="fixed">
+        <parent link="box_panel_front"/>
+        <child link="box_panel_top"/>
+        <origin xyz="-${box_panel_top_depth} 0 ${box_panel_fb_height}"/>
+    </joint>
+
+    <!-- JOINT: HINGE + PANEL BACK -->
+    <joint name="hinge_pback_joint" type="fixed">
+        <parent link="box_panel_back"/>
+        <child link="hinge_cover"/>
+        <origin xyz="0 0 ${box_panel_fb_height + hinge_cover_radius}" rpy="${pi/2} 0 0"/>
+    </joint>
+
+    <!-- JOINT: BOX COVER + HINGE -->
+    <joint name="cover_hinge_joint" type="revolute">
+        <vc_robot_controller type="covers"/>
+        <parent link="hinge_cover"/>
+        <child link="box_cover"/>
+        <axis xyz="0 1 0"/>
+        <origin xyz="0 0 0" rpy="${pi/2} 0 0" />
+        <limit effort="100.0" lower="0.0" upper="1.3" velocity="0.5"/>
+    </joint>
+    <transmission name="transmission_cover_hinge">
+        <plugin>transmission_interface/SimpleTransmission</plugin>
+        <actuator name="actuator_cover_hinge" role="actuator_cover_hinge"/>
+        <joint name="cover_hinge_joint" role="cover_hinge_joint">
+            <mechanical_reduction>1.0</mechanical_reduction>
+        </joint>
+    </transmission>
+
+    <!-- JOINT: BOX GRIPPER + PANEL LEFT -->
+    <joint name="bgripper_pleft_joint" type="fixed">
+        <parent link="box_panel_left"/>
+        <child link="box_gripper_left"/>
+        <origin xyz="0 0 ${box_panel_lr_height/2}"/>
+    </joint>
+
+    <!-- JOINT: BOX GRIPPER HOLDER + BOX GRIPPER LEFT -->
+    <joint name="bgripper_holder_pleft_joint" type="fixed">
+        <parent link="box_gripper_left"/>
+        <child link="box_gripper_holder_left"/>
+        <origin xyz="0 ${box_gripper_holder_length/2} 0"/>
+    </joint>
+
+    <!-- JOINT: BOX GRIPPER + PANEL RIGHT -->
+    <joint name="bgripper_pright_joint" type="fixed">
+        <parent link="box_panel_right"/>
+        <child link="box_gripper_right"/>
+        <origin xyz="0 0 ${box_panel_lr_height/2}"/>
+    </joint>
+
+    <!-- JOINT: BOX GRIPPER HOLDER + BOX GRIPPER RIGHT -->
+    <joint name="bgripper_holder_pright_joint" type="fixed">
+        <parent link="box_gripper_right"/>
+        <child link="box_gripper_holder_right"/>
+        <origin xyz="0 -${box_gripper_holder_length/2} 0"/>
+    </joint>
+
+    <!-- JOINT: FRONT LEFT WHEEL -->
+    <joint name="front_left_wheel_joint" type="continuous">
+        <vc_robot_controller type="differential_drive" side="left"/>
+        <parent link="front_axle"/>
+        <child link="front_left_wheel"/>
+        <origin xyz="0 0 -${axle_length/2 - wheel_length/2 - wheel_screw}" rpy="${pi} 0 0"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+
+    <!-- JOINT: FRONT RIGHT WHEEL -->
+    <joint name="front_right_wheel_joint" type="continuous">
+        <vc_robot_controller type="differential_drive" side="right"/>
+        <parent link="front_axle"/>
+        <child link="front_right_wheel"/>
+        <origin xyz="0 0 ${axle_length/2 - wheel_length/2 - wheel_screw}"/>
+        <axis xyz="0 0 -1"/>
+    </joint>
+
+    <!-- JOINT: BACK LEFT WHEEL -->
+    <joint name="back_left_wheel_joint" type="continuous">
+        <vc_robot_controller type="differential_drive" side="left"/>
+        <parent link="back_axle"/>
+        <child link="back_left_wheel"/>
+        <origin xyz="0 0 -${axle_length/2 - wheel_length/2 - wheel_screw}" rpy="${pi} 0 0"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+
+    <!-- JOINT: BACK RIGHT WHEEL -->
+    <joint name="back_right_wheel_joint" type="continuous">
+        <vc_robot_controller type="differential_drive" side="right"/>
+        <parent link="back_axle"/>
+        <child link="back_right_wheel"/>
+        <origin xyz="0 0 ${axle_length/2 - wheel_length/2 - wheel_screw}"/>
+        <axis xyz="0 0 -1"/>
+    </joint>
+
+</robot>

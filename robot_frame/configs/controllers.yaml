@@ -1,0 +1,93 @@
+# [GENERATED YAML-FILE]
+controller_manager:
+  ros__parameters:
+    update_rate: !!int 30
+    use_sim_time: !!bool true
+    manipulators_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+    joints_broadcaster_controller:
+      type: joint_state_broadcaster/JointStateBroadcaster
+    grippers_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+    left_gripper_action_controller:
+      type: position_controllers/GripperActionController
+    right_gripper_action_controller:
+      type: position_controllers/GripperActionController
+    covers_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+    differential_drive_controller:
+      type: diff_drive_controller/DiffDriveController
+manipulators_controller:
+  ros__parameters:
+    joints:
+    - left_m1st_abase_joint
+    - left_a1st_m1st_joint
+    - left_a2nd_m2nd_joint
+    - right_m1st_abase_joint
+    - right_a1st_m1st_joint
+    - right_a2nd_m2nd_joint
+    command_interfaces:
+    - position
+    state_interfaces:
+    - position
+    open_loop_control: !!bool true
+    allow_partial_joints_goal: !!bool true
+    allow_integration_in_goal_trajectories: !!bool false
+joints_broadcaster_controller:
+  ros__parameters:
+    use_local_topics: !!bool false
+grippers_controller:
+  ros__parameters:
+    joints:
+    - left_gripper_controller
+    - right_gripper_controller
+    command_interfaces:
+    - position
+    state_interfaces:
+    - position
+    open_loop_control: !!bool false
+    allow_partial_joints_goal: !!bool true
+    allow_integration_in_goal_trajectories: !!bool true
+    allow_nonzero_velocity_at_trajectory_end: !!bool true
+left_gripper_action_controller:
+  ros__parameters:
+    joint: left_gripper_controller
+    action_monitor_rate: !!float 20.0
+    goal_tolerance: !!float 0.01
+    max_effort: !!float 900.0
+    allow_stalling: !!bool false
+    stall_velocity_threshold: !!float 0.001
+    stall_timeout: !!float 1.0
+right_gripper_action_controller:
+  ros__parameters:
+    joint: right_gripper_controller
+    action_monitor_rate: !!float 20.0
+    goal_tolerance: !!float 0.01
+    max_effort: !!float 900.0
+    allow_stalling: !!bool false
+    stall_velocity_threshold: !!float 0.001
+    stall_timeout: !!float 1.0
+covers_controller:
+  ros__parameters:
+    joints:
+    - cover_hinge_joint
+    command_interfaces:
+    - position
+    state_interfaces:
+    - position
+    open_loop_control: !!bool true
+    allow_partial_joints_goal: !!bool true
+    allow_integration_in_goal_trajectories: !!bool false
+differential_drive_controller:
+  ros__parameters:
+    publish_rate: !!float 30.0
+    base_frame_id: base_link
+    wheel_separation: !!float 0.485
+    wheel_radius: !!float 0.0923
+    use_stamped_vel: !!bool false
+    left_wheel_names:
+    - front_left_wheel_joint
+    - back_left_wheel_joint
+    right_wheel_names:
+    - front_right_wheel_joint
+    - back_right_wheel_joint

@@ -34,5 +34,6 @@ test.sh
 sitl_stop.sh
 build/*
 .vscode/*
+.editorconfig
 scripts/demonstation/shared/*
 scripts/demonstation/Keys/*

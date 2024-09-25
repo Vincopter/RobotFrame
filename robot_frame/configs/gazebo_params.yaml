@@ -1,0 +1,4 @@
+# [GENERATED YAML-FILE]
+gazebo:
+  ros__parameters:
+    publish_rate: !!float 400.0

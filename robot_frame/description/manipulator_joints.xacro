@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!--MACROS JOINT'S DEFINITION DETAILS-->
+    <!-- Definition of joint's transmission -->
+    <xacro:macro name="transmission_to_joint" params="name">
+        <transmission name="trans_${name}">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${name}_joint" role="${name}_joint">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="actuator_${name}" role="actuator_${name}">
+                <mechanicalReduction>1</mechanicalReduction>
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </actuator>
+        </transmission>
+    </xacro:macro>
+
+    <xacro:macro name="gripper_part_joint" params="side orient reflect gripper_basis">
+
+        <joint name="${side}_${orient}_gripper_joint" type="revolute">
+            <axis xyz="0 0 ${reflect}"/>
+            <limit effort="1000.0" lower="0.0" upper="0.548" velocity="0.5"/>
+            <origin rpy="0 0 0" xyz="${articulation_end_effector_radius/2} ${reflect*0.01} 0"/>
+            <parent link="${gripper_basis}" />
+            <child link="${side}_${orient}_gripper"/>
+            <dynamics damping="5"/>
+        </joint>
+        <joint name="${side}_${orient}_gripper_tip_joint" type="revolute">
+            <parent link="${side}_${orient}_gripper" />
+            <child link="${side}_${orient}_gripper_tip"/>
+            <dynamics damping="5"/>
+            <mimic joint="${side}_${orient}_gripper_joint" multiplier="1.0" offset="0" />
+        </joint>
+    </xacro:macro>
+
+    <!--Definition of full gripper by side-->
+    <xacro:macro name="gripper_joint" params="side flange">
+
+        <link name="${side}_gripper_base">
+            <inertial>
+                <mass value="2e-06"/>
+                <inertia ixx="1.1e-09" ixy="0" ixz="0" iyy="1.1e-09" iyz="0" izz="1.1e-09"/>
+            </inertial>
+        </link>
+
+        <joint name="${side}_gripper_to_flange" type="fixed">
+            <parent link="${flange}" />
+            <child link="${side}_gripper_base"/>
+        </joint>
+
+        <!--TIP UP-->
+        <joint name="${side}_gripper_controller" type="revolute">
+            <vc_robot_controller type="grippers" side="${side}"/>
+            <vc_robot_controller type="gripper_action" side="${side}"/>
+            <axis xyz="0 0 1"/>
+            <limit effort="1000.0" lower="0.0" upper="0.548" velocity="0.5"/>
+            <origin rpy="0 0 0" xyz="${articulation_end_effector_radius/2} ${0.01} 0"/>
+            <parent link="${side}_gripper_base" />
+            <child link="${side}_up_gripper"/>
+            <dynamics damping="5"/>
+        </joint>
+        <joint name="${side}_up_gripper_tip_joint" type="fixed">
+            <parent link="${side}_up_gripper" />
+            <child link="${side}_up_gripper_tip"/>
+            <dynamics damping="5"/>
+        </joint>
+
+        <!--TIP DOWN-->
+        <joint name="${side}_down_gripper_joint" type="revolute">
+            <vc_robot_controller type="gripper_mimic" side="${side}"/>
+            <axis xyz="0 0 -1"/>
+            <limit effort="1000.0" lower="0.0" upper="0.548" velocity="0.5"/>
+            <origin rpy="0 0 0" xyz="${articulation_end_effector_radius/2} ${-0.01} 0"/>
+            <parent link="${side}_gripper_base" />
+            <child link="${side}_down_gripper"/>
+            <dynamics damping="5"/>
+            <mimic joint="${side}_gripper_controller" multiplier="1.0" offset="0" />
+        </joint>
+        <joint name="${side}_down_gripper_tip_joint" type="fixed">
+            <parent link="${side}_down_gripper" />
+            <child link="${side}_down_gripper_tip"/>
+            <dynamics damping="5"/>
+        </joint>
+
+        <xacro:transmission_to_joint name="${side}_gripper_controller"/>
+
+    </xacro:macro>
+
+    <!-- DEFINITION OF JOINTS FOR 3 DoF MANIPULATOR-->
+    <xacro:macro name="ThreeDoF_joints" params="side">
+        <xacro:property name="factor_by_side" value="1.0"/>
+        <xacro:if value="${side == 'left'}">
+            <xacro:property name="factor_by_side" value="-1.0"/>
+        </xacro:if>
+
+        <!-- JOINT: BASE ARTICULATION + GRIPPER HOLDER -->
+        <joint name="${side}_abase_gholder_joint" type="fixed">
+            <parent link="box_gripper_holder_${side}"/>
+            <child link="articulation_base_${side}"/>
+            <origin xyz="0 ${factor_by_side * -box_gripper_holder_length/2} 0"/>
+        </joint>
+
+        <!-- JOINT: 1ST MANIPULATOR + BASE ARTICULATION -->
+        <joint name="${side}_m1st_abase_joint" type="revolute">
+            <vc_robot_controller type="manipulators" side="${side}"/>
+            <parent link="articulation_base_${side}"/>
+            <child link="manipulator_1st_${side}"/>
+            <axis xyz="0 1 0"/>
+            <dynamics damping="5"/>
+            <origin 
+                rpy="0 0 0"
+                xyz="0 ${factor_by_side * -(manipulator_1st_length/2)} 0" 
+            />
+            <limit effort="100.0" lower="-2.99" upper="0.1" velocity="1"/>
+        </joint>
+        
+        <!-- JOINT: 1ST ARTICULATION + 1ST MANIPULATOR -->
+        <joint name="${side}_a1st_m1st_joint" type="revolute">
+            <vc_robot_controller type="manipulators" side="${side}"/>
+            <parent link="manipulator_1st_${side}"/>
+            <child link="articulation_1st_${side}"/>
+            <origin 
+                rpy="0 0 0" 
+                xyz="0 ${factor_by_side * -(manipulator_1st_length/2 + articulation_radius/2)} -${manipulator_radius}"
+            />
+            <axis xyz="0 0 ${-factor_by_side}"/>
+            <limit effort="100.0" lower=".0" upper="${1.5}" velocity="1"/>
+            <dynamics damping="5"/>
+        </joint>
+        
+        <!-- JOINT: 2ND MANIPULATOR + 1ST ARTICULATION -->
+        <joint name="${side}_m2nd_a1st_joint" type="fixed">
+            <parent link="articulation_1st_${side}"/>
+            <child link="manipulator_2nd_${side}"/>
+            <origin xyz="${manipulator_2nd_length/2} 0 -${articulation_length/5}"/>
+        </joint>
+
+        <!-- JOINT: 2ND ARTICULATION + 2ND MANIPULATOR -->        
+        <joint name="${side}_a2nd_m2nd_joint" type="revolute">
+            <vc_robot_controller type="manipulators" side="${side}"/>
+            <parent link="manipulator_2nd_${side}"/>
+            <child link="articulation_2nd_${side}"/>
+            <origin xyz="${manipulator_2nd_length/2} 0 -${articulation_length/5}"/>
+            <axis xyz="0 0 ${-1 * factor_by_side}"/>
+            <limit effort="100.0" lower="-1.5" upper="1.5" velocity="1"/>
+            <dynamics damping="5"/>
+        </joint>
+
+        <!-- JOINT: 3RD MANIPULATOR + 2ND ARTICULATION -->
+        <joint name="${side}_m3rd_a2nd_joint" type="fixed">
+            <parent link="articulation_2nd_${side}"/>
+            <child link="manipulator_3rd_${side}"/>
+            <origin xyz="${manipulator_3rd_length/2} 0 -${articulation_length/5}" />
+        </joint>
+
+        <!-- JOINT: 3RD ARTICULATION + 3RD MANIPULATOR -->
+        <joint name="${side}_ard_m3rd_joint" type="fixed">
+            <parent link="manipulator_3rd_${side}"/>
+            <child link="articulation_end_effector_${side}"/>
+            <origin xyz="${manipulator_3rd_length/2} 0 0"/>
+        </joint>
+
+        <!-- MANIPULATOR'S TRASMISSION -->
+        <xacro:transmission_to_joint name="${side}_m1st_abase"/>
+        <xacro:transmission_to_joint name="${side}_a1st_m1st"/>
+        <xacro:transmission_to_joint name="${side}_a2nd_m2nd"/>
+
+        <!-- JOINT: 3RD ARTICULATION (GRIPPER BASE) + GRIPPER -->
+        <xacro:gripper_joint side="${side}" flange="articulation_end_effector_${side}" />
+
+    </xacro:macro>
+
+    <!-- IMPELEMENT OF MANIPULATOR'S JOINTS -->
+    <!--LEFT 3DoF-->
+    <xacro:ThreeDoF_joints side="left" />
+    <!--RIGHT 3DoF-->
+    <xacro:ThreeDoF_joints side="right" />
+
+</robot>

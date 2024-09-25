@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<material name="BlueOne">
+		<color rgba="0.0 0.0 1.0 1.0"/>
+	</material>
+
+	<material name="RedOne">
+		<color rgba="1.0 0.0 0.0 1.0"/>
+	</material>
+
+	<material name="WhiteOne">
+		<color rgba="1.0 1.0 1.0 1.0"/>
+	</material>
+
+	<material name="YellowOne">
+		<color rgba="0.651 0.67 0.114 1.0"/>
+	</material>
+
+	<material name="BlackOne">
+		<color rgba="0 0 0 1.0"/>
+	</material>
+
+	<material name="OrangeOne">
+		<color rgba="0.96 0.613 0.365 1.0"/>
+	</material>
+	
+	<material name="PurpleOne">
+		<color rgba="0.633 0.114 0.67 1.0"/>
+	</material>
+	
+	<material name="TurquoiseOne">
+		<color rgba="0.114 0.67 0.642 1.0"/>
+	</material>
+
+	<material name="GreenOne">
+		<color rgba="0.653 0.96 0.684 1.0"/>
+	</material>
+
+	<material name="IndigoOne">
+		<color rgba="0.468 0.408 0.77 1.0"/>
+	</material>
+
+	<material name="GreyOne">
+		<color rgba="0.75 0.7 0.8 1.0"/>
+	</material>
+
+	<material name="GreyTransparentOne">
+		<color rgba="0.754 0.79 0.82 1.0"/>
+	</material>
+
+    <xacro:macro name="gazeboGreyColorBlock" params="link">
+		<gazebo reference="${link}">
+			<visual>
+				<material>
+					<ambient>0.5 0.5 0.5 1.0</ambient>
+					<diffuse>0.56666695 0.56666695 0.56666695 1.0</diffuse>
+					<specular>0.6000003 0.6000003 0.6000003 1.0</specular>
+				</material>
+			</visual>
+		</gazebo>
+	</xacro:macro>
+
+	<xacro:macro name="gazeboBlueColorBlock" params="link">
+		<gazebo reference="${link}">
+			<visual>
+				<material>
+					<ambient>0.589 0.793 1.0 1.0</ambient>
+					<diffuse>0.56666695 0.56666695 0.56666695 1.0</diffuse>
+					<specular>0.6000003 0.6000003 0.6000003 1.0</specular>
+				</material>
+			</visual>
+		</gazebo>
+	</xacro:macro>
+
+	<xacro:macro name="gazeboDarkBlueColorBlock" params="link">
+		<gazebo reference="${link}">
+			<visual>
+				<material>
+					<ambient>0.1 0.1 0.1 1</ambient>
+					<diffuse>0.1 0.1 0.2 1</diffuse>
+					<specular>0 0 0 0</specular>
+					<emissive>0 0 0 1</emissive>
+				</material>
+			</visual>
+		</gazebo>
+	</xacro:macro>
+
+	<xacro:macro name="gazeboStickerBlock" params="link">
+		<gazebo reference="${link}">
+			<visual>
+				<material>
+					<script>
+            			<uri>file://$(arg resDir)/sticker/sticker.material</uri>
+						<name>vc_robot/sticker</name>
+          			</script>
+				</material>
+			</visual>
+		</gazebo>
+	</xacro:macro>
+
+	<xacro:macro name="gazeboBackroundStickerBlock" params="link">
+		<gazebo reference="${link}">
+			<visual>
+				<material>
+					<script>
+            			<uri>file://$(arg resDir)/sticker/bg_sticker.material</uri>
+						<name>vc_robot/bg_sticker</name>
+          			</script>
+				</material>
+			</visual>
+		</gazebo>
+	</xacro:macro>
+
+	<xacro:macro name="gazeboLedLightBlock" params="link">
+		<gazebo reference="${link}">
+			<visual>
+				<material>
+					<ambient>0 0 0 1</ambient>
+					<diffuse>0 0 0 1</diffuse>
+					<specular>0 0 0 0</specular>
+					<emissive>0 1 0 1</emissive>
+				</material>
+			</visual>
+		</gazebo>
+	</xacro:macro>
+
+</robot>

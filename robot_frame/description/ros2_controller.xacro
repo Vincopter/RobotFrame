@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="wheel_ros2_interface" params="prefix vmin vmax">
+        <joint name="${prefix}_wheel_joint">
+            <command_interface name="velocity">
+                <param name="min">${vmin}</param>
+                <param name="max">${vmax}</param>
+            </command_interface>
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
+    </xacro:macro>
+    <xacro:macro name="wheels_ros2_interface" params="location vmin:='-20' vmax:='20'">
+        <xacro:wheel_ros2_interface prefix="${location}_left"
+            vmin="${vmin}"
+            vmax="${vmax}"
+        />
+        <xacro:wheel_ros2_interface prefix="${location}_right"
+            vmin="${vmin}"
+            vmax="${vmax}"
+        />
+    </xacro:macro>
+
+    <xacro:macro name="manipulator_ros2_interface" params="prefix pos_min pos_max">
+        <joint name="${prefix}_joint">
+            <command_interface name="position">
+                <param name="min">${pos_min}</param>
+                <param name="max">${pos_max}</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+    </xacro:macro>
+    <xacro:macro name="manipulators_ros2_interface" params="location pos_min:='-2.5' pos_max:='2.5'">
+        <xacro:manipulator_ros2_interface prefix="left_${location}"
+            pos_min="${pos_min}"
+            pos_max="${pos_max}"
+        />
+        <xacro:manipulator_ros2_interface prefix="right_${location}"
+            pos_min="${pos_min}"
+            pos_max="${pos_max}"
+        />
+    </xacro:macro>
+
+    <ros2_control name="RobotSystem" type="system">
+        <hardware>
+            <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+        </hardware>
+
+        <!-- WHEEL'S INTERFACES-->
+        <xacro:wheels_ros2_interface location="front" />
+        <xacro:wheels_ros2_interface location="back" />
+
+        <!-- MANIPULATOR'S INTERFACES-->
+        <xacro:manipulators_ros2_interface location="m1st_abase"/>
+        <xacro:manipulators_ros2_interface location="a1st_m1st"/>
+        <xacro:manipulators_ros2_interface location="a2nd_m2nd"/>
+ 
+        <!-- GRIPPER'S INTERFACES-->
+        <!--LEFT-->
+        <joint name="left_gripper_controller">
+            <command_interface name="position">
+                <param name="min">0.0</param>
+                <param name="max">0.548</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+        <joint name="left_down_gripper_joint">
+            <param name="mimic">left_gripper_controller</param>
+            <param name="multiplier">1.0</param>
+            <command_interface name="position">
+                <param name="min">0.0</param>
+                <param name="max">0.548</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+        <!--RIGHT-->
+        <joint name="right_gripper_controller">
+            <command_interface name="position">
+                <param name="min">0.0</param>
+                <param name="max">0.548</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+        <joint name="right_down_gripper_joint">
+            <param name="mimic">right_gripper_controller</param>
+            <param name="multiplier">1.0</param>
+            <command_interface name="position">
+                <param name="min">0.0</param>
+                <param name="max">0.548</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <!--BOX COVER-->
+        <joint name="cover_hinge_joint">
+            <command_interface name="position">
+                <param name="min">0.0</param>
+                <param name="max">1.3</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+   
+    </ros2_control>
+
+    <gazebo>
+        <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+            <!-- 
+                parameter values ​​will be generated for RobotFrame 
+                and inserted into the final description file (see controllers.py)
+            -->            
+            <robot_param/>
+            <robot_param_node/>
+            <parameters/>
+        </plugin>
+
+        <plugin name="gazebo_ros_joint_pose_trajectory" filename="libgazebo_ros_joint_pose_trajectory.so">
+            <update_rate>20</update_rate>
+        </plugin>
+
+        <plugin name="gazebo_ros_joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+            <update_rate>20</update_rate>
+            <!-- 
+                list of <joint_name> values ​​will be generated for RobotFrame 
+                and inserted into the final description file (see controllers.py)
+            -->
+        </plugin>
+    </gazebo>
+
+</robot>
