@@ -35,5 +35,6 @@ sitl_stop.sh
 build/*
 .vscode/*
 .editorconfig
+run_jupyter.bat
 scripts/demonstation/shared/*
 scripts/demonstation/Keys/*
