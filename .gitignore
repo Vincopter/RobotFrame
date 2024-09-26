@@ -36,5 +36,5 @@ build/*
 .vscode/*
 .editorconfig
 run_jupyter.bat
-scripts/demonstation/shared/*
-scripts/demonstation/Keys/*
+robot_frame/scripts/docker/shared/*
+robot_frame/scripts/docker/Keys/*
