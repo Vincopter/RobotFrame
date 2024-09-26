@@ -63,8 +63,8 @@ source install/setup.bash
 
 PROJECT_ROOT=$(pwd)/${DEMO_PROJECT}
 PROJECT_MODELS_PATH="${PROJECT_ROOT}/worlds/models:${PROJECT_ROOT}/robot_frame/description/resources"
-(GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:${PROJECT_MODELS_PATH}
-
+GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:${PROJECT_MODELS_PATH}
+echo $GAZEBO_MODEL_PATH > ~/dev_ws/src/test.txt
 ros2 launch robot_frame gazebo.launch.py gui:='False' run_demo:='True'
 FEOF
 sudo chmod +x ${HOST_SHARED_PATH}/${DEMO_RUN_SHELL_FILE}
