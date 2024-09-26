@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+""" Модуль демонстрации работы манипуляторов 3-DOF.
+    Запуск;
+    - самостоятельной отдельной нодой:
+    ros2 run robot_frame demonstration.py
+    - в составе launch-файла в gazebo, с помощью опции запуска run_demo:
+    ros2 launch robot_frame gazebo.launch.py run_demo:='True'
+"""
 import sys
 import rclpy
 import datetime
