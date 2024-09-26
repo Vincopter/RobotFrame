@@ -90,6 +90,7 @@ def generate_launch_description():
     launch_description = LaunchDescription(getLaunchArgs())
 
     from utils import ArgumentsType
+    use_gui = LaunchConfiguration(utils.getArgumentNameByType(ArgumentsType.USE_GUI))
     run_rviz = LaunchConfiguration(utils.getArgumentNameByType(ArgumentsType.RUN_RVIZ))
     run_demo = LaunchConfiguration(utils.getArgumentNameByType(ArgumentsType.RUN_DEMO))
     use_cameras = LaunchConfiguration(utils.getArgumentNameByType(ArgumentsType.USE_CAMERAS))
@@ -101,7 +102,7 @@ def generate_launch_description():
             os.path.join(utils.getLaunchShareDir(), 'robot.launch.py')
             ]), 
         launch_arguments={
-            utils.getArgumentNameByType(ArgumentsType.USE_GUI): 'True',
+            utils.getArgumentNameByType(ArgumentsType.USE_GUI): use_gui,
             utils.getArgumentNameByType(ArgumentsType.USE_TELEOP): use_teleop,
             utils.getArgumentNameByType(ArgumentsType.USE_SIM_TIME): 'True',
             utils.getArgumentNameByType(ArgumentsType.USE_ROS2_CONTROL): use_ros2_control,
@@ -115,7 +116,6 @@ def generate_launch_description():
         ]),
         condition=IfCondition(run_rviz),
         launch_arguments={
-            utils.getArgumentNameByType(ArgumentsType.USE_GUI): 'True',
             utils.getArgumentNameByType(ArgumentsType.USE_TELEOP): 'True',
             utils.getArgumentNameByType(ArgumentsType.USE_SIM_TIME): 'True',
             utils.getArgumentNameByType(ArgumentsType.RUN_PUBLISHER): 'False',

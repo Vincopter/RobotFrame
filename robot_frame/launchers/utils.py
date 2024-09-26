@@ -35,7 +35,7 @@ argumentsDescByType = {
     ArgumentsType.USE_SIM_TIME: ['use_sim_time', 'True', 'Use simulation time'],
     ArgumentsType.TMUX_RULES: ['tmux_rules', '', 'In the parameter need to specify list of nodes and their priorities. '\
                 'Format: "{cmd_vel_<topic_trait>:priority}"'],
-    ArgumentsType.USE_GUI: ['gui', 'False', 'This is a flag for joint_state_publisher_gui'],
+    ArgumentsType.USE_GUI: ['gui', 'True', 'This is a flag for joint_state_publisher_gui'],
     ArgumentsType.MODEL_SCHEMA: ['model', '', "Path to URDF file (robot's description)"],
     ArgumentsType.RUN_PUBLISHER: ['run_publisher', 'True', "Run robot state's publisher if True"],
     ArgumentsType.PARAMS_YAML: ['params_file', '', "Gazebo parameters in YAML-format"],

@@ -1,7 +1,7 @@
+#!/bin/bash
 #
 # [RobotFrame] Start script of demonstration.
 #
-#!/bin/bash
 CURRENT_DIR=$('pwd')
 DOCKER_VOLUME="shared"
 HOST_SHARED_PATH=${CURRENT_DIR}/${DOCKER_VOLUME}
@@ -60,7 +60,7 @@ cd ~/dev_ws
 cp -r /shared/${DEMO_PROJECT} src
 colcon build --symlink-install
 source install/setup.bash
-ros2 launch robot_frame launch_sim.launch.py
+ros2 launch robot_frame gazebo.launch.py gui:='False' run_demo:='True'
 FEOF
 sudo chmod +x ${HOST_SHARED_PATH}/${DEMO_RUN_SHELL_FILE}
 
@@ -87,7 +87,7 @@ ${GEN_SCRIPTS_SIGN}
 #!/bin/bash
 source /opt/ros/humble/setup.bash
 source /root/dev_ws/install/setup.bash
-ros2 run teleop_twist_keyboard teleop_twist_keyboard
+ros2 launch robot_frame teleop.launch.py
 FEOF
 sudo chmod +x ${HOST_SHARED_PATH}/${RUN_CONTROL_SHELL_FILE}
 
@@ -113,7 +113,7 @@ start_script_as_X "docker exec -it ${docker_hash} /bin/bash" "CONSOLE"
 sleep 3
 
 # Starting control on host
-start_script_as_X "docker exec -it ${docker_hash} /bin/bash /${DOCKER_VOLUME}/${RUN_CONTROL_SHELL_FILE}" "CONTROL"
+start_script_as_X "docker exec -it ${docker_hash} /bin/bash /${DOCKER_VOLUME}/${RUN_CONTROL_SHELL_FILE}" "CONTROL" "150x40"
 sleep 3
 
 # Starting gazebo on host

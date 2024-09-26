@@ -1,7 +1,7 @@
+#!/bin/bash
 #
 # [RobotFrame] Script of prepare demonstration.
 #
-#!/bin/bash
 CURRENT_DIR=$('pwd')
 DOCKER_VOLUME="shared"
 DOCKER_VOLUME_DIR=${CURRENT_DIR}/${DOCKER_VOLUME}
