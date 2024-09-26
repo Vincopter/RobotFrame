@@ -60,6 +60,11 @@ cd ~/dev_ws
 cp -r /shared/${DEMO_PROJECT} src
 colcon build --symlink-install
 source install/setup.bash
+
+PROJECT_ROOT=$(pwd)/${DEMO_PROJECT}
+PROJECT_MODELS_PATH="${PROJECT_ROOT}/worlds/models:${PROJECT_ROOT}/robot_frame/description/resources"
+(GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:${PROJECT_MODELS_PATH}
+
 ros2 launch robot_frame gazebo.launch.py gui:='False' run_demo:='True'
 FEOF
 sudo chmod +x ${HOST_SHARED_PATH}/${DEMO_RUN_SHELL_FILE}
@@ -109,11 +114,11 @@ start_script_as_X "ssh -i ${DOCKER_SSH_KEYS_DIR}/${DOCKER_KEY_NAME} root@$('host
 sleep 3
 
 # Starting console
-start_script_as_X "docker exec -it ${docker_hash} /bin/bash" "CONSOLE"
+start_script_as_X "docker exec -it ${docker_hash} /bin/bash" "CONSOLE" "150x40"
 sleep 3
 
 # Starting control on host
-start_script_as_X "docker exec -it ${docker_hash} /bin/bash /${DOCKER_VOLUME}/${RUN_CONTROL_SHELL_FILE}" "CONTROL" "150x40"
+start_script_as_X "docker exec -it ${docker_hash} /bin/bash /${DOCKER_VOLUME}/${RUN_CONTROL_SHELL_FILE}" "CONTROL"
 sleep 3
 
 # Starting gazebo on host
@@ -121,11 +126,13 @@ gazebo_port=11345
 is_exist_port=$(sudo netstat -tulpn | grep ${gazebo_port} | grep gzserver | wc -l)
 if [ $is_exist_port -eq 1 ]; then
    PROJECT_ROOT=${HOST_SHARED_PATH}/${DEMO_PROJECT}
-   PROJECT_MODELS_PATH='${PROJECT_ROOT}/worlds/models:${PROJECT_ROOT}/robot_frame/description/resources'
-   (GAZEBO_MASTER_URI=http://localhost:${gazebo_port} GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:${PROJECT_MODELS_PATH} nohup gzclient &) &> /dev/null
+   PROJECT_MODELS_PATH="${PROJECT_ROOT}/worlds/models:${PROJECT_ROOT}/robot_frame/description/resources"
+   echo "Rewrite variable GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:${PROJECT_MODELS_PATH}"
+   (GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:${PROJECT_MODELS_PATH} GAZEBO_MASTER_URI=http://localhost:${gazebo_port} nohup gzclient &) &> /dev/null
 else
     echo 'No specified port ${gazebo_port} for running Gazebo client!'
 fi
+
 echo "Gazebo application started."
 
 

@@ -149,17 +149,7 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='beer_clone_0_clone_clone'>
-        <pose>-0.975506 65.455 0.105 -1.5708 1.08324 -1.57081</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose>-0.860506 65.455 0.105 -1.5708 1.08324 -1.57081</pose>
-          <velocity>1e-06 0.04892 -0 -0.889454 1.1e-05 0</velocity>
-          <acceleration>-2e-06 0 -1e-06 0 -4.4e-05 0</acceleration>
-          <wrench>-1e-06 0 -0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='cube_20k'>
+      <model name='cube_20k_blue'>
         <pose>3.53215 1.15947 0.049999 4e-06 -2e-06 0.000409</pose>
         <scale>1 1 1</scale>
         <link name='link'>
@@ -169,7 +159,7 @@
           <wrench>-2.87705 -0.786299 12.4393 0 -0 0</wrench>
         </link>
       </model>
-      <model name='cube_20k_clone'>
+      <model name='cube_20k_red'>
         <pose>0.205509 -3.05932 0.05 -1e-06 -2e-06 0.000384</pose>
         <scale>1 1 1</scale>
         <link name='link'>
@@ -179,7 +169,7 @@
           <wrench>-1.63105 -1.12295 -1.77809 0 -0 0</wrench>
         </link>
       </model>
-      <model name='cube_20k_clone_0'>
+      <model name='cube_20k_turquoise'>
         <pose>-0.363633 7.0818 0.049998 -2e-06 -1e-06 0.10546</pose>
         <scale>1 1 1</scale>
         <link name='link'>
@@ -189,7 +179,7 @@
           <wrench>0 0 -9.8 0 -0 0</wrench>
         </link>
       </model>
-      <model name='cube_20k_clone_1'>
+      <model name='cube_20k_green'>
         <pose>-7.17237 3.54315 0.050001 -0 -2e-06 0.105462</pose>
         <scale>1 1 1</scale>
         <link name='link'>
@@ -199,7 +189,7 @@
           <wrench>0.880052 1.08845 -4.8512 0 -0 0</wrench>
         </link>
       </model>
-      <model name='cube_20k_clone_2'>
+      <model name='cube_20k_yellow'>
         <pose>3.14235 -8.2134 0.05 4e-06 4e-06 0.105464</pose>
         <scale>1 1 1</scale>
         <link name='link'>
@@ -209,7 +199,7 @@
           <wrench>0.888566 1.16539 2.1775 0 -0 0</wrench>
         </link>
       </model>
-      <model name='cube_20k_clone_2_clone'>
+      <model name='cube_20k_brown'>
         <pose>4.19333 7.96938 0.05 6e-06 3e-06 0.941506</pose>
         <scale>1 1 1</scale>
         <link name='link'>
@@ -219,7 +209,7 @@
           <wrench>0.306802 0.418662 0.624601 0 -0 0</wrench>
         </link>
       </model>
-      <model name='cube_20k_clone_clone'>
+      <model name='cube_20k_orange'>
         <pose>7.81066 -3.30402 0.049998 -6e-06 -2e-06 0.167461</pose>
         <scale>1 1 1</scale>
         <link name='link'>
@@ -229,7 +219,7 @@
           <wrench>-0.599318 0.149164 -6.95299 0 -0 0</wrench>
         </link>
       </model>
-      <model name='cube_20k_clone_clone_0'>
+      <model name='cube_20k_purple'>
         <pose>-5.47054 -1.95988 0.049996 5e-06 -1e-06 0.922926</pose>
         <scale>1 1 1</scale>
         <link name='link'>
@@ -249,7 +239,7 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='jersey_barrier_clone'>
+      <model name='barrier_1'>
         <pose>-9.60965 -0.527778 0 0 -0 1.55474</pose>
         <scale>1 1 1</scale>
         <link name='link'>
@@ -259,7 +249,7 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='jersey_barrier_clone_clone'>
+      <model name='barrier_2'>
         <pose>-9.668 -5.62005 0 0 -0 1.54084</pose>
         <scale>1 1 1</scale>
         <link name='link'>
@@ -269,7 +259,7 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='jersey_barrier_clone_clone_clone'>
+      <model name='barrier_3'>
         <pose>-6.74774 -9.41565 0 0 -0 0.014113</pose>
         <scale>1 1 1</scale>
         <link name='link'>
@@ -279,7 +269,7 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='jersey_barrier_clone_clone_clone_clone'>
+      <model name='barrier_4'>
         <pose>-2.23723 -9.38237 0 0 -0 0.014113</pose>
         <scale>1 1 1</scale>
         <link name='link'>
@@ -289,7 +279,7 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='jersey_barrier_clone_clone_clone_clone_0'>
+      <model name='barrier_5'>
         <pose>2.15281 -9.37587 0 0 -0 0.014113</pose>
         <scale>1 1 1</scale>
         <link name='link'>
@@ -299,7 +289,7 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='jersey_barrier_clone_clone_clone_clone_0_clone'>
+      <model name='barrier_6'>
         <pose>-5.77929 9.4599 0 0 -0 0.014113</pose>
         <scale>1 1 1</scale>
         <link name='link'>
@@ -309,7 +299,7 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='jersey_barrier_clone_clone_clone_clone_0_clone_0'>
+      <model name='barrier_7'>
         <pose>-0.85695 9.50673 0 0 -0 0.014113</pose>
         <scale>1 1 1</scale>
         <link name='link'>
@@ -319,7 +309,7 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='jersey_barrier_clone_clone_clone_clone_0_clone_1'>
+      <model name='barrier_8'>
         <pose>4.21514 9.55006 0 0 -0 0.014113</pose>
         <scale>1 1 1</scale>
         <link name='link'>
@@ -329,7 +319,7 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='jersey_barrier_clone_clone_clone_clone_0_clone_2'>
+      <model name='barrier_9'>
         <pose>9.48969 6.49741 0 0 -0 1.5755</pose>
         <scale>1 1 1</scale>
         <link name='link'>
@@ -339,7 +329,7 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='jersey_barrier_clone_clone_clone_clone_0_clone_2_clone_0'>
+      <model name='barrier_10'>
         <pose>9.35312 -5.76688 0 0 -0 1.5755</pose>
         <scale>1 1 1</scale>
         <link name='link'>
@@ -349,7 +339,7 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='jersey_barrier_clone_clone_clone_clone_0_clone_2_clone_0_clone'>
+      <model name='barrier_11'>
         <pose>9.39583 -0.690835 0 0 -0 1.5755</pose>
         <scale>1 1 1</scale>
         <link name='link'>
@@ -359,7 +349,7 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='jersey_barrier_clone_clone_clone_clone_0_clone_2_clone_1'>
+      <model name='barrier_12'>
         <pose>-9.44305 4.33655 0 0 -0 1.5755</pose>
         <scale>1 1 1</scale>
         <link name='link'>
@@ -369,7 +359,7 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='jersey_barrier_clone_clone_clone_clone_1'>
+      <model name='barrier_13'>
         <pose>6.76884 -9.4514 0 0 -0 0.014113</pose>
         <scale>1 1 1</scale>
         <link name='link'>
@@ -439,16 +429,6 @@
           <wrench>-103.115 -112.443 -141.664 0 -0 0</wrench>
         </link>
       </model>
-      <model name='tube_9_5mm'>
-        <pose>0.694746 12.5146 0.053671 1.55611 -1.35962 -0.256484</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose>0.673343 12.4375 0.053917 1.55611 -1.35962 -0.256484</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>4e-06 -1e-06 -0 0.030171 0.108661 -0.000345</acceleration>
-          <wrench>0 -0 -0 0 -0 0</wrench>
-        </link>
-      </model>
       <light name='sun'>
         <pose>0 0 100 0 -0 0</pose>
       </light>
@@ -460,7 +440,7 @@
         <projection_type>perspective</projection_type>
       </camera>
     </gui>
-    <model name='jersey_barrier_clone'>
+    <model name='barrier_1'>
       <static>1</static>
       <link name='link'>
         <visual name='visual'>
@@ -602,7 +582,7 @@
       </link>
       <pose>-9.6271 -1.12888 0 0 -0 1.54084</pose>
     </model>
-    <model name='jersey_barrier_clone_clone'>
+    <model name='barrier_2'>
       <static>1</static>
       <link name='link'>
         <visual name='visual'>
@@ -744,64 +724,7 @@
       </link>
       <pose>-9.68873 -6.97235 0 0 -0 1.54084</pose>
     </model>
-    <model name='beer_clone_0_clone_clone'>
-      <link name='link'>
-        <pose>0 0 0.115 0 -0 0</pose>
-        <inertial>
-          <mass>0.39</mass>
-          <inertia>
-            <ixx>0.00058</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>0.00058</iyy>
-            <iyz>0</iyz>
-            <izz>0.00019</izz>
-          </inertia>
-          <pose>0 0 0 0 -0 0</pose>
-        </inertial>
-        <collision name='collision'>
-          <geometry>
-            <cylinder>
-              <radius>0.055</radius>
-              <length>0.23</length>
-            </cylinder>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <cylinder>
-              <radius>0.055</radius>
-              <length>0.23</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <script>
-              <uri>model://beer/materials/scripts</uri>
-              <uri>model://beer/materials/textures</uri>
-              <name>Beer/Diffuse</name>
-            </script>
-          </material>
-        </visual>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <pose>1.13305 -2.91478 0.054918 -1.57036 -0.608771 -1.57104</pose>
-    </model>
-    <model name='jersey_barrier_clone_clone_clone'>
+    <model name='barrier_3'>
       <static>1</static>
       <link name='link'>
         <visual name='visual'>
@@ -966,7 +889,7 @@
         <kinematic>0</kinematic>
       </link>
     </model>
-    <model name='jersey_barrier_clone_clone_clone_clone'>
+    <model name='barrier_4'>
       <static>1</static>
       <link name='link'>
         <visual name='visual'>
@@ -1108,7 +1031,7 @@
       </link>
       <pose>-2.23723 -9.38237 0 0 -0 0.014113</pose>
     </model>
-    <model name='jersey_barrier_clone_clone_clone_clone_0'>
+    <model name='barrier_5'>
       <static>1</static>
       <link name='link'>
         <visual name='visual'>
@@ -1250,7 +1173,7 @@
       </link>
       <pose>2.15281 -9.37587 0 0 -0 0.014113</pose>
     </model>
-    <model name='jersey_barrier_clone_clone_clone_clone_1'>
+    <model name='barrier_13'>
       <static>1</static>
       <link name='link'>
         <visual name='visual'>
@@ -1438,7 +1361,7 @@
         <kinematic>0</kinematic>
       </link>
     </model>
-    <model name='jersey_barrier_clone_clone_clone_clone_0_clone'>
+    <model name='barrier_6'>
       <static>1</static>
       <link name='link'>
         <visual name='visual'>
@@ -1580,7 +1503,7 @@
       </link>
       <pose>7.92914 9.87121 0 0 -0 0.014113</pose>
     </model>
-    <model name='jersey_barrier_clone_clone_clone_clone_0_clone_0'>
+    <model name='barrier_7'>
       <static>1</static>
       <link name='link'>
         <visual name='visual'>
@@ -1722,7 +1645,7 @@
       </link>
       <pose>-0.85695 9.50673 0 0 -0 0.014113</pose>
     </model>
-    <model name='jersey_barrier_clone_clone_clone_clone_0_clone_1'>
+    <model name='barrier_8'>
       <static>1</static>
       <link name='link'>
         <visual name='visual'>
@@ -1864,7 +1787,7 @@
       </link>
       <pose>3.77068 9.54379 0 0 -0 0.014113</pose>
     </model>
-    <model name='jersey_barrier_clone_clone_clone_clone_0_clone_2'>
+    <model name='barrier_9'>
       <static>1</static>
       <link name='link'>
         <visual name='visual'>
@@ -2029,64 +1952,6 @@
         <kinematic>0</kinematic>
       </link>
     </model>
-    <model name='tube_9_5mm'>
-      <link name='link'>
-        <pose>0 0 0.08 0 -0 0</pose>
-        <inertial>
-          <mass>0.0048</mass>
-          <inertia>
-            <ixx>1.02839e-05</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>1.02839e-05</iyy>
-            <iyz>0</iyz>
-            <izz>8.79e-08</izz>
-          </inertia>
-          <pose>0 0 0 0 -0 0</pose>
-        </inertial>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://tube_9_5mm/meshes/tube_9_5.dae</uri>
-            </mesh>
-          </geometry>
-          <surface>
-            <contact>
-              <poissons_ratio>0.305</poissons_ratio>
-              <elastic_modulus>2e+11</elastic_modulus>
-              <ode>
-                <kp>100000</kp>
-                <kd>100</kd>
-                <max_vel>100</max_vel>
-                <min_depth>0.001</min_depth>
-              </ode>
-            </contact>
-            <friction>
-              <torsional>
-                <coefficient>1</coefficient>
-                <use_patch_radius>0</use_patch_radius>
-                <surface_radius>0.01</surface_radius>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-            <bounce/>
-          </surface>
-          <max_contacts>10</max_contacts>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://tube_9_5mm/meshes/tube_9_5.dae</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <pose>3.06229 11.6753 0 0 -0 0</pose>
-    </model>
     <model name='number5'>
       <pose>9.31557 2.59785 0.4 0 -0 0</pose>
       <static>1</static>
@@ -2110,7 +1975,7 @@
         <kinematic>0</kinematic>
       </link>
     </model>
-    <model name='jersey_barrier_clone_clone_clone_clone_0_clone_2_clone_0'>
+    <model name='barrier_10'>
       <static>1</static>
       <link name='link'>
         <visual name='visual'>
@@ -2252,7 +2117,7 @@
       </link>
       <pose>9.35312 -5.76688 0 0 -0 1.5755</pose>
     </model>
-    <model name='jersey_barrier_clone_clone_clone_clone_0_clone_2_clone_1'>
+    <model name='barrier_12'>
       <static>1</static>
       <link name='link'>
         <visual name='visual'>
@@ -2394,7 +2259,7 @@
       </link>
       <pose>-6.46221 0.390488 0 0 -0 1.5755</pose>
     </model>
-    <model name='jersey_barrier_clone_clone_clone_clone_0_clone_2_clone_0_clone'>
+    <model name='barrier_11'>
       <static>1</static>
       <link name='link'>
         <visual name='visual'>
@@ -2536,7 +2401,7 @@
       </link>
       <pose>9.39583 -0.690835 0 0 -0 1.5755</pose>
     </model>
-    <model name='cube_20k_clone'>
+    <model name='cube_20k_red'>
       <link name='link'>
         <pose>0 0 0.5 0 -0 0</pose>
         <self_collide>0</self_collide>
@@ -2585,7 +2450,7 @@
           <pose>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/osin/.gazebo/models/cube_20k/meshes/cube_20k.stl</uri>
+              <uri>model://cube_20k/meshes/cube_20k.stl</uri>
               <scale>0.5 0.5 0.5</scale>
             </mesh>
           </geometry>
@@ -2640,7 +2505,7 @@
       <allow_auto_disable>1</allow_auto_disable>
       <pose>0.205272 -3.06008 0 0 0 -1.1e-05</pose>
     </model>
-    <model name='cube_20k_clone_1'>
+    <model name='cube_20k_green'>
       <link name='link'>
         <pose>0 -0 0.5 0 -0 0</pose>
         <self_collide>0</self_collide>
@@ -2689,7 +2554,7 @@
           <pose>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/osin/.gazebo/models/cube_20k/meshes/cube_20k.stl</uri>
+              <uri>model://cube_20k/meshes/cube_20k.stl</uri>
               <scale>0.5 0.5 0.5</scale>
             </mesh>
           </geometry>
@@ -2744,7 +2609,7 @@
       <allow_auto_disable>1</allow_auto_disable>
       <pose>-6.30487 2.76529 0.05 0 -0 0.159354</pose>
     </model>
-    <model name='cube_20k_clone_clone_0'>
+    <model name='cube_20k_purple'>
       <link name='link'>
         <pose>-0 -0 0.5 0 -0 0</pose>
         <self_collide>0</self_collide>
@@ -2793,7 +2658,7 @@
           <pose>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/osin/.gazebo/models/cube_20k/meshes/cube_20k.stl</uri>
+              <uri>model://cube_20k/meshes/cube_20k.stl</uri>
               <scale>0.5 0.5 0.5</scale>
             </mesh>
           </geometry>
@@ -2848,7 +2713,7 @@
       <allow_auto_disable>1</allow_auto_disable>
       <pose>-4.78703 -1.35566 0.049999 9e-06 -7e-06 1.65554</pose>
     </model>
-    <model name='cube_20k'>
+    <model name='cube_20k_blue'>
       <link name='link'>
         <pose>0 0 0.5 0 -0 0</pose>
         <self_collide>0</self_collide>
@@ -2897,7 +2762,7 @@
           <pose>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/osin/.gazebo/models/cube_20k/meshes/cube_20k.stl</uri>
+              <uri>model://cube_20k/meshes/cube_20k.stl</uri>
               <scale>0.5 0.5 0.5</scale>
             </mesh>
           </geometry>
@@ -2952,7 +2817,7 @@
       <allow_auto_disable>1</allow_auto_disable>
       <pose>3.01826 1.50392 0.050007 -1.5e-05 -0 0.108049</pose>
     </model>
-    <model name='cube_20k_clone_0'>
+    <model name='cube_20k_turquoise'>
       <link name='link'>
         <pose>-0 -0 0.5 0 -0 0</pose>
         <self_collide>0</self_collide>
@@ -3001,7 +2866,7 @@
           <pose>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/osin/.gazebo/models/cube_20k/meshes/cube_20k.stl</uri>
+              <uri>model://cube_20k/meshes/cube_20k.stl</uri>
               <scale>0.5 0.5 0.5</scale>
             </mesh>
           </geometry>
@@ -3056,7 +2921,7 @@
       <allow_auto_disable>1</allow_auto_disable>
       <pose>-0.36377 7.08171 0.050001 -1e-06 -4e-06 0.736893</pose>
     </model>
-    <model name='cube_20k_clone_2_clone'>
+    <model name='cube_20k_brown'>
       <link name='link'>
         <pose>-0 0 0.5 0 -0 0</pose>
         <self_collide>0</self_collide>
@@ -3105,7 +2970,7 @@
           <pose>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/osin/.gazebo/models/cube_20k/meshes/cube_20k.stl</uri>
+              <uri>model://cube_20k/meshes/cube_20k.stl</uri>
               <scale>0.5 0.5 0.5</scale>
             </mesh>
           </geometry>
@@ -3160,7 +3025,7 @@
       <allow_auto_disable>1</allow_auto_disable>
       <pose>3.96731 8.31776 0.126039 -4e-06 2e-06 2.43986</pose>
     </model>
-    <model name='cube_20k_clone_clone'>
+    <model name='cube_20k_orange'>
       <link name='link'>
         <pose>-0 0 0.5 0 -0 0</pose>
         <self_collide>0</self_collide>
@@ -3209,7 +3074,7 @@
           <pose>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/osin/.gazebo/models/cube_20k/meshes/cube_20k.stl</uri>
+              <uri>model://cube_20k/meshes/cube_20k.stl</uri>
               <scale>0.5 0.5 0.5</scale>
             </mesh>
           </geometry>
@@ -3264,7 +3129,7 @@
       <allow_auto_disable>1</allow_auto_disable>
       <pose>8.18267 -3.29346 0.05 1e-05 -1e-06 1.72972</pose>
     </model>
-    <model name='cube_20k_clone_2'>
+    <model name='cube_20k_yellow'>
       <link name='link'>
         <pose>0 0 0.5 0 -0 0</pose>
         <self_collide>0</self_collide>
@@ -3313,7 +3178,7 @@
           <pose>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/osin/.gazebo/models/cube_20k/meshes/cube_20k.stl</uri>
+              <uri>model://cube_20k/meshes/cube_20k.stl</uri>
               <scale>0.5 0.5 0.5</scale>
             </mesh>
           </geometry>
