@@ -120,7 +120,9 @@ sleep 3
 gazebo_port=11345
 is_exist_port=$(sudo netstat -tulpn | grep ${gazebo_port} | grep gzserver | wc -l)
 if [ $is_exist_port -eq 1 ]; then
-   (GAZEBO_MASTER_URI=http://localhost:${gazebo_port} nohup gzclient &) &> /dev/null
+   PROJECT_ROOT=${HOST_SHARED_PATH}/${DEMO_PROJECT}
+   PROJECT_MODELS_PATH='${PROJECT_ROOT}/worlds/models:${PROJECT_ROOT}/robot_frame/description/resources'
+   (GAZEBO_MASTER_URI=http://localhost:${gazebo_port} GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:${PROJECT_MODELS_PATH} nohup gzclient &) &> /dev/null
 else
     echo 'No specified port ${gazebo_port} for running Gazebo client!'
 fi

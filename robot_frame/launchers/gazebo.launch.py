@@ -65,6 +65,7 @@ def changeEnvironmentVariables():
         utils.getWorldsMaterialDir(),
         utils.getRobotResourceShareDir(),
     ]
+    
     if os.environ.get(variable) is None:
         os.environ[variable] = os.pathsep.join(lstMaterialPaths)
     else:
