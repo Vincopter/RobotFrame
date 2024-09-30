@@ -1,5 +1,4 @@
 #!/bin/bash
-CURRENT_DIR=$('pwd')
 clear
 
 # ROS1

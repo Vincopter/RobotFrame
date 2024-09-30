@@ -138,16 +138,16 @@ start_script_as_X() {
 	xterm -xrm 'XTerm.vt100.allowTitleOps: false' ${windows_style} -T "${tittle}" -e "${command}" &
 }
 
-# Starting ssh console
-# start_script_as_X "ssh -i ${HOST_SSH_KEYS_DIR}/${DOCKER_KEY_NAME} root@$('hostname') -p 2202" "SSH CONSOLE" "150x40"
-# sleep 3
-
 # Starting empty console
 start_script_as_X "docker exec -it ${docker_hash} /bin/bash" "CONSOLE" "150x40"
 sleep 3
 
 # Starting control on host
 start_script_as_X "docker exec -it ${docker_hash} /bin/bash /${DOCKER_VOLUME}/${RUN_CONTROL_SHELL_FILE}" "CONTROL"
+sleep 3
+
+# Starting ssh console
+start_script_as_X "ssh -i ${HOST_SSH_KEYS_DIR}/${DOCKER_KEY_NAME} root@$('hostname') -p 2202" "SSH CONSOLE" "150x40"
 sleep 3
 
 # Starting gazebo on host
