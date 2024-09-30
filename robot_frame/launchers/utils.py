@@ -23,6 +23,7 @@ class ArgumentsType(Enum):
     WORLD_FILE = 13
     RESOURCES_DIR = 14
     ROBOT_DESCRIPTION = 15
+    USE_DOCKER = 16
 
 argumentsDescByType = {
     # format: name arg, default value, description
@@ -42,6 +43,7 @@ argumentsDescByType = {
     ArgumentsType.WORLD_FILE: ['world', '', "Gazebo world file (SDF-file)"],
     ArgumentsType.RESOURCES_DIR: ['resDir', '', "Directory with resources (models, materials) for applying to robot (*.dae, *.png)"],
     ArgumentsType.ROBOT_DESCRIPTION: ['robot_description', '', "Robot's description file (xacro-format)"],
+    ArgumentsType.USE_DOCKER: ['use_docker', 'False', "Launch nodes from Docker container"],
 }
 
 class SideType(Enum):

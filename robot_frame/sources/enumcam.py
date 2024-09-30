@@ -96,7 +96,7 @@ def getCamConfigYaml(camId: int):
     }
     
     fileNamePath = os.path.join(
-        utils.getRealPackageDirPath(), 
+        utils.getRealRobotFrameDirPath(), 
         'configs', 
         "sunplus_param_camera_{}.yaml".format(camOrientation[camId]))
     saveYaml(fileNamePath, configDict)

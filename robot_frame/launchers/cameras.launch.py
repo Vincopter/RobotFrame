@@ -181,9 +181,11 @@ def getLaunchActions(context):
     return cameraNodes
 
 def generate_launch_description():
-    
-    opaqueFunc = OpaqueFunction(function = getLaunchActions)
-    launchDescription = LaunchDescription(getLaunchArgs())
-    launchDescription.add_action(opaqueFunc)
-    return launchDescription
+    try:
+        opaqueFunc = OpaqueFunction(function = getLaunchActions)
+        launchDescription = LaunchDescription(getLaunchArgs())
+        launchDescription.add_action(opaqueFunc)
+        return launchDescription
+    except Exception as _:
+        return LaunchDescription()
     

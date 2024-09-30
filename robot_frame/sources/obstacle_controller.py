@@ -437,7 +437,7 @@ class ObstacleControl(Node):
         ))(
             0.1,
         )
-        
+        self._logger.info(f"Config controllers file is '{configYamlFile}'.")
         self.parseYamlConfigAndGetSpecificNodes(configYamlFile)
        
         self.__odom = OdomProps(isVerbose)
