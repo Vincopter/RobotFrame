@@ -51,10 +51,10 @@ libopencv-dev \
 net-tools \
 iproute2 \
 iputils-ping \
-ros-humble-xacro \
 python3-argcomplete \
 joystick \
 ros-dev-tools \
+ros-humble-xacro \
 ros-humble-gazebo-ros-pkgs \
 ros-humble-joint-state-publisher-gui \
 ros-humble-rmw-cyclonedds-cpp \

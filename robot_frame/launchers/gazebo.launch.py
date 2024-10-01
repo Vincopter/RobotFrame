@@ -3,14 +3,14 @@ import os, sys, pathlib
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription, RegisterEventHandler, LogInfo, ExecuteProcess
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration, PythonExpression, FindExecutable
+from launch.substitutions import LaunchConfiguration
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, TimerAction, GroupAction
-from launch.event_handlers import OnExecutionComplete, OnProcessExit, OnProcessIO, OnProcessStart
+from launch.event_handlers import OnProcessStart
 from launch.conditions import IfCondition, UnlessCondition
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
-import utils, controllers
+import utils
 
 def getGazeboParamToYaml():
     gazeboParamsDict = {
@@ -76,10 +76,12 @@ def changeEnvironmentVariables():
 def getLaunchArgs():
     from utils import ArgumentsType
     return [
+        utils.getLaunchArgumentDeclaration(ArgumentsType.USE_GUI),
         utils.getLaunchArgumentDeclaration(ArgumentsType.RUN_RVIZ),
         utils.getLaunchArgumentDeclaration(ArgumentsType.USE_CAMERAS),
         utils.getLaunchArgumentDeclaration(ArgumentsType.USE_TELEOP),
         utils.getLaunchArgumentDeclaration(ArgumentsType.USE_ROS2_CONTROL),
+        utils.getLaunchArgumentDeclaration(ArgumentsType.WORLD_FILE),
         utils.getLaunchArgumentDeclaration(ArgumentsType.RUN_DEMO),
     ]
     
@@ -92,6 +94,7 @@ def generate_launch_description():
 
     from utils import ArgumentsType
     use_gui = LaunchConfiguration(utils.getArgumentNameByType(ArgumentsType.USE_GUI))
+    world = LaunchConfiguration(utils.getArgumentNameByType(ArgumentsType.WORLD_FILE))
     run_rviz = LaunchConfiguration(utils.getArgumentNameByType(ArgumentsType.RUN_RVIZ))
     run_demo = LaunchConfiguration(utils.getArgumentNameByType(ArgumentsType.RUN_DEMO))
     use_cameras = LaunchConfiguration(utils.getArgumentNameByType(ArgumentsType.USE_CAMERAS))
@@ -141,10 +144,9 @@ def generate_launch_description():
         launch_arguments={
             utils.getArgumentNameByType(ArgumentsType.PARAMS_YAML): 
                 getGazeboParamToYaml(),
-            utils.getArgumentNameByType(ArgumentsType.WORLD_FILE): 
-                os.path.join(utils.getRealPackageDirPath(), 'worlds', 'cube.world'),
+            utils.getArgumentNameByType(ArgumentsType.WORLD_FILE): world,
             # [DEBUG]
-            #'verbose': 'true'
+            # 'verbose': 'true'
         }.items()
     )
     launch_description.add_action(gazebo)

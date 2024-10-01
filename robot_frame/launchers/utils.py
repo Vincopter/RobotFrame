@@ -25,8 +25,89 @@ class ArgumentsType(Enum):
     ROBOT_DESCRIPTION = 15
     USE_DOCKER = 16
 
+def getPackageName():
+    return 'robot_frame'
+
+def getRobotDescXmlFileName():
+    return 'robot_description.xml'
+
+def getBasisLinkName():
+    """ Base link name by default
+    """
+    return 'base_link'
+
+def getRobotFrameDescTopicName():
+    """ Entity xml published on topic
+    """
+    return 'robot_description'
+
+def getRobotFrameNameToSpawn():
+    """ Name of entity to spawn
+    """
+    return 'vc_robot'
+
+def getRobotDescXmlFilePath():
+    return os.path.join(getRealRobotDescDir(), getRobotDescXmlFileName())
+
+def getRobotUrdfFilePath():
+    """ Descriptio in URDF format
+    """
+    return os.path.join(getRobotDescShareDir(), 'robot.urdf.xacro')
+
+def getRealPackageDirPath():
+    return os.popen(
+        '/bin/bash -c "source /usr/share/colcon_cd/function/colcon_cd.sh && \
+        colcon_cd %s > /dev/null && pwd"' % getPackageName()).read().strip()
+    
+def getRealRobotFrameDirPath():
+    return os.path.join(getRealPackageDirPath(), getPackageName())
+
+def getPackageShareDir():
+    return substitutions.FindPackageShare(package=getPackageName()).find(getPackageName())
+
+def getLaunchShareDir():
+    return os.path.join(getPackageShareDir(), "launchers")
+
+def getRobotFrameConfigDir():
+    return os.path.join(getRealRobotFrameDirPath(), "configs")
+
+def saveYaml(filename: str, content: dict):
+    yamlContainer = dump(content, default_style='"', sort_keys=False)
+    yamlContainer = yamlContainer.replace("\"", "").replace("'", '"')
+    with open(filename, encoding='utf8', mode='w') as fl:
+        fl.write('# [GENERATED YAML-FILE]\n')
+        fl.write(yamlContainer)
+
+def saveXml(filename: str, content: str):
+    from lxml import etree
+    root = etree.fromstring(content)
+    root.addprevious(etree.Comment('[GENERATED XML-FILE]'))
+    etree.ElementTree(root).write(
+        filename,
+        pretty_print=True,
+        encoding="UTF-8",
+        xml_declaration=True)
+
+def getRealRobotDescDir():
+    return os.path.join(getRealRobotFrameDirPath(), "description")
+
+def getRobotDescShareDir():
+    return os.path.join(getPackageShareDir(), "description")
+
+def getRobotResourceShareDir():
+    for p in Path(getRobotDescShareDir()).glob('**/resources'):
+        if p.is_dir():
+            return os.path.realpath(p)
+    return str()
+
+def getWorldsMaterialDir():
+    return os.path.join(getRealPackageDirPath(), "worlds", "models")
+
+""" Arguments types enum values definition.
+    Format: [<name arg>, <default value>, <description>]
+"""
 argumentsDescByType = {
-    # format: name arg, default value, description
+
     ArgumentsType.NAMESPACE: ['namespace', "", "ROS namespace name for cameras"],
     ArgumentsType.RUN_RVIZ: ['run_rviz', "False", "Start also Rviz module if True"],
     ArgumentsType.USE_CAMERAS: ['use_cameras','False', "Connect to real web-cameras (front and back cameras) if True"],
@@ -40,7 +121,8 @@ argumentsDescByType = {
     ArgumentsType.MODEL_SCHEMA: ['model', '', "Path to URDF file (robot's description)"],
     ArgumentsType.RUN_PUBLISHER: ['run_publisher', 'True', "Run robot state's publisher if True"],
     ArgumentsType.PARAMS_YAML: ['params_file', '', "Gazebo parameters in YAML-format"],
-    ArgumentsType.WORLD_FILE: ['world', '', "Gazebo world file (SDF-file)"],
+    ArgumentsType.WORLD_FILE: ['world', 
+                os.path.join(getRealPackageDirPath(), 'worlds', 'cube.world'), "Gazebo world file (SDF-file)"],
     ArgumentsType.RESOURCES_DIR: ['resDir', '', "Directory with resources (models, materials) for applying to robot (*.dae, *.png)"],
     ArgumentsType.ROBOT_DESCRIPTION: ['robot_description', '', "Robot's description file (xacro-format)"],
     ArgumentsType.USE_DOCKER: ['use_docker', 'False', "Launch nodes from Docker container"],
@@ -119,81 +201,3 @@ def getLaunchArgumentDeclaration(argType: ArgumentsType, defaultValue = None):
 #
 # /*@}*/
 #
-
-def getPackageName():
-    return 'robot_frame'
-
-def getRobotDescXmlFileName():
-    return 'robot_description.xml'
-
-def getBasisLinkName():
-    """ Base link name by default
-    """
-    return 'base_link'
-
-def getRobotFrameDescTopicName():
-    """ Entity xml published on topic
-    """
-    return 'robot_description'
-
-def getRobotFrameNameToSpawn():
-    """ Name of entity to spawn
-    """
-    return 'vc_robot'
-
-def getRobotDescXmlFilePath():
-    return os.path.join(getRealRobotDescDir(), getRobotDescXmlFileName())
-
-def getRobotUrdfFilePath():
-    """ Descriptio in URDF format
-    """
-    return os.path.join(getRobotDescShareDir(), 'robot.urdf.xacro')
-
-def getRealPackageDirPath():
-    return os.popen(
-        '/bin/bash -c "source /usr/share/colcon_cd/function/colcon_cd.sh && \
-        colcon_cd %s > /dev/null && pwd"' % getPackageName()).read().strip()
-    
-def getRealRobotFrameDirPath():
-    return os.path.join(getRealPackageDirPath(), getPackageName())
-
-def getPackageShareDir():
-    return substitutions.FindPackageShare(package=getPackageName()).find(getPackageName())
-
-def getLaunchShareDir():
-    return os.path.join(getPackageShareDir(), "launchers")
-
-def getRobotFrameConfigDir():
-    return os.path.join(getRealRobotFrameDirPath(), "configs")
-
-def saveYaml(filename: str, content: dict):
-    yamlContainer = dump(content, default_style='"', sort_keys=False)
-    yamlContainer = yamlContainer.replace("\"", "").replace("'", '"')
-    with open(filename, encoding='utf8', mode='w') as fl:
-        fl.write('# [GENERATED YAML-FILE]\n')
-        fl.write(yamlContainer)
-
-def saveXml(filename: str, content: str):
-    from lxml import etree
-    root = etree.fromstring(content)
-    root.addprevious(etree.Comment('[GENERATED XML-FILE]'))
-    etree.ElementTree(root).write(
-        filename,
-        pretty_print=True,
-        encoding="UTF-8",
-        xml_declaration=True)
-
-def getRealRobotDescDir():
-    return os.path.join(getRealRobotFrameDirPath(), "description")
-
-def getRobotDescShareDir():
-    return os.path.join(getPackageShareDir(), "description")
-
-def getRobotResourceShareDir():
-    for p in Path(getRobotDescShareDir()).glob('**/resources'):
-        if p.is_dir():
-            return os.path.realpath(p)
-    return str()
-
-def getWorldsMaterialDir():
-    return os.path.join(getRealPackageDirPath(), "worlds", "models")
