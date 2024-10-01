@@ -21,11 +21,10 @@
     <xacro:include filename="manipulators.xacro"/>
     <xacro:include filename="manipulator_joints.xacro"/>
 
+    <!-- [UNUSED] -->
     <!-- LADLE AND JOINTS -->
-    <!-- [DEBUG] -->
     <!-- 
     <xacro:include filename="ladle.xacro"/>
-    <xacro:include filename="ladle_joints.xacro"/> 
     -->
 
     <!-- BASIS LINK -->
@@ -134,7 +133,10 @@
         <origin xyz="${box_bracket_ladle_depth+ box_bracket_ladle_depth/2} -${box_bracket_ladle_width/2 - box_bracket_holder_width/2} 0"/>
     </joint>
 
-    <!-- LADLE (INCLUDES)--> 
+    <!-- LADLE --> 
+    <!-- --> 
+    <!-- DESCRIPTION INCLUDES --> 
+    <!-- --> 
 
     <!-- BOX PANELS -->
     <!-- JOINT: PANEL BACK + CHASSIS -->
