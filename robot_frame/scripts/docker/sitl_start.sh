@@ -11,7 +11,19 @@ PROJECT_NAME="RobotFrame"
 DEMO_DOCKER_IMAGE="${PACKAGE_NAME}:demo"
 GEN_SCRIPTS_SIGN="#[{$PROJECT_NAME}] << Generated script >>"
 
+check_gazebo_client() {
+   which gzclient &> /dev/null
+   if [ $? -eq 1 ]; then echo "Gazebo isn't installed!"; exit 1; fi
+
+   GAZEBO_RECOMENDED_VER="11"
+   GAZEBO_VER=$(gzclient --version | grep version | sed 's/.*version \([0-9]\{2\}\).*/\1/')
+   if [[ $GAZEBO_VER -lt $GAZEBO_RECOMENDED_VER ]]; then 
+      echo "It is recommended to have Gazebo version below ${GAZEBO_RECOMENDED_VER}!"
+   fi
+}
+
 cd ${HOST_SHARED_PATH} || { echo "Invalid host shared path"; exit 1; }
+check_gazebo_client
 
 # Configure SSH
 DOCKER_KEY_NAME="id_demo"
