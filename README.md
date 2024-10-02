@@ -5,7 +5,7 @@
 **Модель RobotFrame**<br>
 <img src="pictures/picture01.png" width="300"/>
 <img src="pictures/picture02.png" width="330"/>
-<img src="pictures/picture03.png" width="250"/>
+<img src="pictures/picture03.png" width="245"/>
 
 Содержание:
 - "[Состав и структура пакета](#PacketStructure)"
@@ -83,8 +83,8 @@
 
 <a name="BuildingPacket"></a> 
 ## Зависимости и сборка пакета
-Модель разработана для использования в контексте платформы и программного фреймворка __ROS2 (Humble)__, под управлением ОС Ubuntu. Для сборки и конфигурирования пакета в ROS2 используется colcon.<br>
-Поддержка работы на операционных системах ниже требуемой (Ubuntu 22.04) для фреймворка ROS2, достигается с помощью контейнеризации в Docker в случае запуска симуляции (см. [Порядок использования Docker для запуска симуляции Gazebo](#DockerGazebo))<br><br>
+Модель разработана для использования в контексте платформы и программного фреймворка __ROS2 (Humble)__, под управлением ОС Ubuntu. Для сборки и конфигурирования пакета в ROS2 используется *colcon*.<br>
+Поддержка работы на операционных системах ниже требуемой (Ubuntu 22.04) для фреймворка ROS2, достигается с помощью контейнеризации в Docker в случае запуска симуляции. Описание смотрите в рункте [Порядок использования Docker для запуска симуляции Gazebo](#DockerGazebo)<br><br>
 
 Для построения и работы модели используется как стандартные пакеты, так и ряд дополнительных пакетов для фреймворка ROS2:
 - Стандартный пакет ros-dev-tools, включающий утилиты для разработки, в частности компилятор colcon (https://github.com/ros-infrastructure/infra-variants).
@@ -116,19 +116,23 @@ $ python3 -m pip install -U argcomplete flake8 flake8-blind-except flake8-builti
 $ sudo apt install --no-install-recommends -y libopencv-dev libasio-dev libtinyxml2-dev libqt5gui5
 ```
 </p>
-</details>
+</details><br>
 Для сборки проекта и, впоследствии, запуска симуляции непосредственно на сервере под управлением ОС Ubuntu 22.04 рекомендуется выполнить установку ROS 
-и настройку окружения с помощью скрипта  [install_environment.sh](robot_frame/scripts/install_environment.sh)<br>
+и настройку окружения с помощью скрипта [install_environment.sh](robot_frame/scripts/install_environment.sh)<br>
 
-<h2 id="VisualRviz">Визуализация модели в Rviz</h2>
+<a name="VisualRviz"></a> 
+## Визуализация модели в Rviz
+Для запуска визуализации модели в программе Rviz2 рекомендуется выполнить скрипт [run_rviz.sh](robot_frame/scripts/run_rviz.sh), который запускает процесс с помощью launch-файла [rviz.launch.py](robot_frame/launchers/rviz.launch.py). Запущенная в Rviz среда будет уже настроена на отображение модели и данных с топиков работающих с сенсорами (лидар, камеры). В окружении также будет доступна программа «Joint State Publisher», в которой можно управлять положением соединений (joints). Пример отображения программы Rviz2<br>
+ <details><summary>разверните для просмотра</summary>
+    <img src="pictures/picture04.png" width="500"/>
+</details>
 
-<br>
-
-
-<h2 id="SimGazebo">Запуск модели в симуляторе Gazebo</h2>
+<a name="SimGazebo"></a> 
+## Запуск модели в симуляторе Gazebo
 lllll
 
-<h2 id="DockerGazebo">Порядок использования Docker для запуска симуляции Gazebo</h2>
+<a name="DockerGazebo"></a> 
+## Порядок использования Docker для запуска симуляции Gazebo
 
 hhhh
 
