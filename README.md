@@ -3,7 +3,9 @@
 Концепция применения робота близка к работе складского робота, который обладает возможностью перемещения малоразмерных грузов с автоматизированным процессом захвата и погрузки объекта (pick-and-place), перемещении на небольшие расстояния до пункта работы оператора, с последующей разгрузкой. 
 
 **Модель RobotFrame**<br>
-<img src="pictures/picture01.png" width="330"/>
+<img src="pictures/picture01.png" width="300"/>
+<img src="pictures/picture02.png" width="330"/>
+<img src="pictures/picture03.png" width="250"/>
 
 Содержание:
 - "[Состав и структура пакета](#PacketStructure)"
@@ -14,6 +16,8 @@
 
 
 <h2 id="PacketStructure">Состав и структура пакета</h2>
+Пакет RobotFrame содержит описание модели робота в URDF-формате, launch-файлы запуска симуляций в различных режимах, 
+командные скрипты запуска симуляций, а такде реализацию контроллеров, используемых в симуляции и для демонстрации.
 <details><summary>Пакет имеет следующую файловую структуру (разверните для просмотра)</summary>
 <p>
 
@@ -81,7 +85,7 @@
 Модель разработана для использования в контексте платформы и программного фреймворка **ROS2 (Humble)**, под управлением ОС Ubuntu. Для сборки и конфигурирования пакета в ROS2 используется colcon.<br>
 Поддержка работы на операционных системах ниже требуемой (Ubuntu 22.04) для фреймворка ROS2, достигается с помощью контейнеризации в Docker в случае запуска симуляции (см. [Порядок использования Docker для запуска симуляции Gazebo](#DockerGazebo))<br><br>
 
-Для построения и работе модели используется как стандартные пакеты, так и ряд дополнительных пакетов для фреймворка ROS2:
+Для построения и работы модели используется как стандартные пакеты, так и ряд дополнительных пакетов для фреймворка ROS2:
 - Стандартный пакет ros-dev-tools, включающий утилиты для разработки, в частности компилятор colcon (https://github.com/ros-infrastructure/infra-variants).
 - Пакет ros-humble-xacro, интерпретатор Xacro для ROS2 Humble (https://github.com/ros/xacro).
 - DDS-сервер Cyclone (пакет ros-humble-rmw-cyclonedds-cpp), для непосредственного функционирования ROS2 Humble.
@@ -96,13 +100,28 @@
 - Пакет мультиплексора сообщений Twist, регулирующих скорость (twist-mux), для объединения нескольких контроллеров управления (например, клавиатура, джойстик).
 - Контроллер коррекции маршрута и обхода препятствий, реализованный как модуль в составе модели RobotFrame (obstacle_controller).
 
-Приложения для симуляции:<br>
+Приложения для симуляции и визализации модули:<br>
 - Cимулятор Gazebo (https://github.com/gazebosim/gazebo-classic).
 - Rviz (https://github.com/ros2/rviz).
 - Rqt (https://github.com/ros-visualization/rqt)
 
+Для сборки пакета необходимо иметь среду и настроенное окружение разработчика ROS2.
+<details><summary>Для установки окружения и инструментов разработчика ROS (разверните для просмотра)</summary>
+<p>
+
+```
+$ sudo apt update && sudo apt install -y build-essential cmake git python3-pip python-rosdep python3-vcstool wget python3-colcon-common-extensions
+$ python3 -m pip install -U argcomplete flake8 flake8-blind-except flake8-builtins pytest-repeat pytestpytest-runner setuptools
+$ sudo apt install --no-install-recommends -y libopencv-dev libasio-dev libtinyxml2-dev libqt5gui5
+```
+</p>
+</details>
+Для сборки проекта и, впоследствии, запуска симуляции непосредственно на сервере под управлением ОС Ubuntu 22.04 рекомендуется выполнить установку ROS 
+и настройку окружения с помощью скрипта  [install_environment.sh](robot_frame/scripts/install_environment.sh)<br>
+
 <h2 id="VisualRviz">Визуализация модели в Rviz</h2>
-ыыыы<br>
+
+<br>
 
 
 <h2 id="SimGazebo">Запуск модели в симуляторе Gazebo</h2>
