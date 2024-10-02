@@ -117,19 +117,23 @@ $ sudo apt install --no-install-recommends -y libopencv-dev libasio-dev libtinyx
 ```
 </p>
 </details><br>
-Для сборки проекта и, впоследствии, запуска симуляции непосредственно на сервере под управлением ОС Ubuntu 22.04 рекомендуется выполнить установку ROS 
-и настройку окружения с помощью скрипта [install_environment.sh](robot_frame/scripts/install_environment.sh)<br>
+При необходимости сборки проекта локально на сервере под управлением ОС Ubuntu 22.04 и запуска симуляции рекомендуется предварительно выполнить установку ROS2 
+и настройку окружения с помощью скрипта [install_environment.sh](robot_frame/scripts/install_environment.sh). После выполнения скрипта будет доступна вся необходимая среда для запуска симуляции в Gazebo. Далее, следует клонировать проект RobotFrame на локальный сервер и собрать пакет
+```
+colcon build --symlink-install --packages-select robot_frame
+```
 
 <a name="VisualRviz"></a> 
 ## Визуализация модели в Rviz
-Для запуска визуализации модели в программе Rviz2 рекомендуется выполнить скрипт [run_rviz.sh](robot_frame/scripts/run_rviz.sh), который запускает процесс с помощью launch-файла [rviz.launch.py](robot_frame/launchers/rviz.launch.py). Запущенная в Rviz среда будет уже настроена на отображение модели и данных с топиков работающих с сенсорами (лидар, камеры). В окружении также будет доступна программа «Joint State Publisher», в которой можно управлять положением соединений (joints). Пример отображения программы Rviz2<br>
- <details><summary>разверните для просмотра</summary>
-    <img src="pictures/picture04.png" width="500"/>
+Для запуска визуализации для модели RobotFrame, в программе Rviz2, рекомендуется выполнить скрипт [run_rviz.sh](robot_frame/scripts/run_rviz.sh), который запускает процесс с помощью launch-файла [rviz.launch.py](robot_frame/launchers/rviz.launch.py). Запущенная в Rviz среда будет уже настроена на отображение модели и данных с топиков работающих с сенсорами (лидары, камеры, одометрия, координаты). Также, в окружении будет запущена и доступна программа «Joint State Publisher», в которой можно управлять положением соединений робота (joints).<br>
+*Пример отображения модели в программе Rviz2*
+<details><summary>разверните для просмотра</summary>
+    <img src="pictures/picture04.png"/>
 </details>
 
 <a name="SimGazebo"></a> 
 ## Запуск модели в симуляторе Gazebo
-lllll
+При запуске визуализации
 
 <a name="DockerGazebo"></a> 
 ## Порядок использования Docker для запуска симуляции Gazebo
