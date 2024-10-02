@@ -4,8 +4,8 @@
 
 **Модель RobotFrame**<br>
 <img src="pictures/picture01.png" width="300"/>
-<img src="pictures/picture02.png" width="330"/>
-<img src="pictures/picture03.png" width="245"/>
+<img src="pictures/picture02.png" width="300"/>
+<img src="pictures/picture03_.png" width="245"/>
 
 Содержание:
 - "[Состав и структура пакета](#PacketStructure)"
@@ -101,13 +101,13 @@
 - Пакет мультиплексора сообщений Twist, регулирующих скорость (twist-mux), для объединения нескольких контроллеров управления (например, клавиатура, джойстик).
 - Контроллер коррекции маршрута и обхода препятствий, реализованный как модуль в составе модели RobotFrame (obstacle_controller).
 
-Приложения для симуляции и визализации модули:<br>
+Необходимые приложения для симуляции и визализации модели:<br>
 - Cимулятор Gazebo (https://github.com/gazebosim/gazebo-classic).
 - Rviz (https://github.com/ros2/rviz).
-- Rqt (https://github.com/ros-visualization/rqt)
+- *Rqt (https://github.com/ros-visualization/rqt)*
 
 Для сборки пакета необходимо иметь среду и настроенное окружение разработчика ROS2.
-<details><summary>Для установки окружения и инструментов разработчика ROS (разверните для просмотра)</summary>
+<details><summary>Установка окружения и инструментов разработчика ROS (разверните для просмотра)</summary>
 <p>
 
 ```
@@ -116,7 +116,8 @@ $ python3 -m pip install -U argcomplete flake8 flake8-blind-except flake8-builti
 $ sudo apt install --no-install-recommends -y libopencv-dev libasio-dev libtinyxml2-dev libqt5gui5
 ```
 </p>
-</details><br>
+</details><br>  
+
 При необходимости сборки проекта локально на сервере под управлением ОС Ubuntu 22.04 и запуска симуляции рекомендуется предварительно выполнить установку ROS2 
 и настройку окружения с помощью скрипта [install_environment.sh](robot_frame/scripts/install_environment.sh). После выполнения скрипта будет доступна вся необходимая среда для запуска симуляции в Gazebo. Далее, следует клонировать проект RobotFrame на локальный сервер и собрать пакет
 ```
@@ -125,20 +126,32 @@ colcon build --symlink-install --packages-select robot_frame
 
 <a name="VisualRviz"></a> 
 ## Визуализация модели в Rviz
-Для запуска визуализации для модели RobotFrame, в программе Rviz2, рекомендуется выполнить скрипт [run_rviz.sh](robot_frame/scripts/run_rviz.sh), который запускает процесс с помощью launch-файла [rviz.launch.py](robot_frame/launchers/rviz.launch.py). Запущенная в Rviz среда будет уже настроена на отображение модели и данных с топиков работающих с сенсорами (лидары, камеры, одометрия, координаты). Также, в окружении будет запущена и доступна программа «Joint State Publisher», в которой можно управлять положением соединений робота (joints).<br>
-*Пример отображения модели в программе Rviz2*
-<details><summary>разверните для просмотра</summary>
+Для локального запуска визуализации модели RobotFrame, в программе Rviz2, рекомендуется выполнить скрипт [run_rviz.sh](robot_frame/scripts/run_rviz.sh), который запускает процесс с помощью launch-файла [rviz.launch.py](robot_frame/launchers/rviz.launch.py). Запущенная в Rviz среда будет уже настроена на отображение модели и данных с топиков работающих с сенсорами (лидары, камеры, одометрия, координаты). Также, в окружении будет запущена и доступна программа «Joint State Publisher», в которой можно управлять положением соединений робота (joints).<br>
+<details><summary>Пример отображения модели в программе Rviz2 (разверните для просмотра)</summary>
     <img src="pictures/picture04.png"/>
 </details>
 
 <a name="SimGazebo"></a> 
 ## Запуск модели в симуляторе Gazebo
-При запуске визуализации
+Перед запуском симуляции в Gazebo рекомендуется проверить корректность настроенного окружения с помощью скрипта [run_gazebo_empty_world.sh](robot_frame/scripts/run_gazebo_empty_world.sh). Скрипт загружает симулятор без модели, с world-окружением [cube.world](worlds/cube.world), в который включены наборы материалов, описанные в пакете. 
+<details><summary>В случае успешного запуска Gazebo будет доступно окружение (разверните для просмотра)</summary>
+    <img src="pictures/picture05.png"/>
+</details>
+
+Для запуска симулятора с моделью, на локальном сервере, необходимо воспользоваться скриптом [run_gazebo_simulation.sh](robot_frame/scripts/run_gazebo_simulation.sh). Скрипт выполняет проверки наличия требуемых пакетов и запускает launch-файл [gazebo.launch.py](robot_frame/launchers/gazebo.launch.py). Ниже перечислено описание доступных опций запуска для gazebo.launch.py, которые можно изменять по собственному усмотрению:<br>
++ use_teleop - использовать управление с клавиатуры (по умолчанию 'False')
++ use_cameras - использовать реальные камеры для подключения к эмуляции (в системе заведены как /dev/video0, /dev/video1)
++ run_rviz - запуск дополнительно Rviz2 (по умолчанию 'False')
++ run_demo - запуск демонстрации работы манипуляторов после прогрузки симулятора Gazebo (по умолчанию 'False')
++ world - карта мира, иcпользуемая для симуляции (по умолчанию 'cube.world')
+<details><summary>В случае успешного запуска Gazebo будет доступно окружение с моделью (разверните для просмотра)</summary>
+    <img src="pictures/picture06.png"/>
+</details>
 
 <a name="DockerGazebo"></a> 
 ## Порядок использования Docker для запуска симуляции Gazebo
+Для запуска симуляции с помощью контейнера Docker следует воспользоваться следующими 
 
-hhhh
 
 
 
