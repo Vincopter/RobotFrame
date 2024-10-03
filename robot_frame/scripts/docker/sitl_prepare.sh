@@ -86,9 +86,7 @@ if [ ! $? -eq 0 ]; then
 fi
 
 cd ${HOST_VOLUME_DIR} || { echo "Failure"; exit 1; }
-# TEST
-#git clone -q https://github.com/Vincopter/RobotFrame.git
-git clone -q git@github.com:Vincopter/RobotFrame.git
+git clone -q https://github.com/Vincopter/RobotFrame.git
 
 cd "${CURRENT_DIR}" || { echo "Failure to get current folder"; exit 1; }
 
