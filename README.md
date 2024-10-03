@@ -215,4 +215,4 @@ colcon build --symlink-install --packages-select robot_frame
 Запуск obstacle-контроллера в симуляции Gazebo предусмотрен по умолчанию.<br> 
 С учетом того, что obstacle-контроллер, по сути, можно считать еще одним устройством управления (со своим алгоритмом), он также будет балансироваться с помощью мультиплексора (*twist_mux*), как клавиатура или джойстик, но в отличии от них, команды управления навигацией от obstacle-контроллера будут обрабатываться дифференциальным приводом с наивысшим приоритетом, что тем самым позволяет вовремя влиять на действия оператора.<br>
 Короткое видео демонстрации работы obstacle-контроллера при движении вперед и назад и обхода препятствий. В данном случае, оператор ведет робота только прямо или назад, то есть только по оси x:<br>
-[![<Ccылка>](https://drive.google.com/file/d/1QnhBp7SkdLHkkOzOmq0o3rzLFKvXgWqY/view?usp=drive_link)](https://drive.google.com/file/d/1QnhBp7SkdLHkkOzOmq0o3rzLFKvXgWqY/view?usp=drive_link)<br>
+[![<Ccылка>](https://drive.google.com/file/d/17lojlBILRfyTTC4mEU-R3ZNqKZeisRaI/view)](https://drive.google.com/file/d/17lojlBILRfyTTC4mEU-R3ZNqKZeisRaI/view)<br>
