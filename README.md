@@ -5,7 +5,7 @@
 **Модель RobotFrame**<br>
 <img src="pictures/picture01.png" width="300"/>
 <img src="pictures/picture02.png" width="305"/>
-<img src="pictures/picture03.png" width="225"/>
+<img src="pictures/picture03.png" width="200"/>
 
 Содержание:
 - "[Состав и структура пакета](#PacketStructure)"
